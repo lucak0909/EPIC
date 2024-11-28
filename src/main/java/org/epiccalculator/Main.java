@@ -34,8 +34,12 @@ public class Main {
                 Algebra.SelectMode();
                 break;
             // Add more cases for other modes
+            case 8:
+                System.out.println(NumberSystems.Calculate());
+                break;
             default:
                 System.out.println("\nInvalid selection. Please try again.");
+
         }
     }
 
