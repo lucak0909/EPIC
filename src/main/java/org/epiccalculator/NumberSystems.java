@@ -4,63 +4,79 @@ import java.util.Scanner;
 
 public class NumberSystems extends Main {
 
-    public static String Calculate() {
-        Scanner input = new Scanner(System.in);
-        int mode = input.nextInt();
-
-        // Error handling to make sure user enters int within range
-        while (!Validate.isNumeric(String.valueOf(mode)) || mode < 1 || mode > 4) {
-            System.out.println("\nInvalid selection. Please try again.");
-            System.out.println("Select your number System");
-            System.out.println("----------------------------");
-            System.out.println("1 --> Decimal (Base 10)");
-            System.out.println("2 --> Binary (Base 2)");
-            System.out.println("3 --> Hexadecimal (Base 16)");
-            System.out.println("4 --> Octal (Base 8)");
-            System.out.println(">>>");
-            mode = input.nextInt();
-        }
-
-        System.out.println("Enter your number:");
-        String number = input.next();
-
-        System.out.println("Select your new number system");
+    // Prompting user to choose from available translations
+    public static void Options() {
+        System.out.println("Select your number System");
         System.out.println("----------------------------");
         System.out.println("1 --> Decimal (Base 10)");
         System.out.println("2 --> Binary (Base 2)");
         System.out.println("3 --> Hexadecimal (Base 16)");
         System.out.println("4 --> Octal (Base 8)");
+        System.out.print(">>>");
+    }
 
-        int newMode = input.nextInt();
-
+    // Method to listen for user mode/input and calculate answer
+    public static String Calculate() {
+        byte mode;
+        int number;
+        byte newMode;
         String result = "";
+
+        Options();
+
+        Scanner input = new Scanner(System.in);// Scanner Obj => 'input'
+        mode = input.nextByte();
+
+        // Error handling to make sure user enters byte within range
+        while (!Validate.isNumeric(String.valueOf(mode)) || mode < 5 || mode > 0) {
+            System.out.println("Invalid -> Try again\n");
+            Options();
+            mode = input.nextByte();
+        }
+
+        System.out.println("Enter your number:");
+        number = input.nextInt();
+
+        while (!Validate.isNumeric(String.valueOf(number))) {
+            System.out.println("Invalid -> Try again\n");
+            System.out.println("Enter your number:");
+            number = input.nextInt();
+        }
+
+        Options();
+        newMode = input.nextByte();
+
+        while (!Validate.isNumeric(String.valueOf(newMode)) || newMode < 5 || newMode > 0) {
+            System.out.println("Invalid -> Try again\n");
+            Options();
+            newMode = input.nextByte();
+        }
 
         switch (mode) {
             case 1: // Decimal
-                int decimal = Integer.parseInt(number);
                 switch (newMode) {
                     case 1:
-                        result = number;
+                        result = String.valueOf(number);
                         break;
                     case 2:
-                        result = Integer.toBinaryString(decimal);
+                        result = Integer.toBinaryString((int) number);
                         break;
                     case 3:
-                        result = Integer.toHexString(decimal);
+                        result = Integer.toHexString((int) number);
                         break;
                     case 4:
-                        result = Integer.toOctalString(decimal);
+                        result = Integer.toOctalString((int) number);
                         break;
                 }
                 break;
             case 2: // Binary
-                int binary = Integer.parseInt(number, 2);
+                int binary = Integer.parseInt(String.valueOf((int) number), 2);
                 switch (newMode) {
                     case 1:
                         result = String.valueOf(binary);
                         break;
                     case 2:
-                        result = number;
+                        result = String.valueOf((int) number);
                         break;
                     case 3:
                         result = Integer.toHexString(binary);
@@ -71,7 +87,7 @@ public class NumberSystems extends Main {
                 }
                 break;
             case 3: // Hexadecimal
-                int hex = Integer.parseInt(number, 16);
+                int hex = Integer.parseInt(String.valueOf((int) number), 16);
                 switch (newMode) {
                     case 1:
                         result = String.valueOf(hex);
@@ -80,7 +96,7 @@ public class NumberSystems extends Main {
                         result = Integer.toBinaryString(hex);
                         break;
                     case 3:
-                        result = number;
+                        result = String.valueOf((int) number);
                         break;
                     case 4:
                         result = Integer.toOctalString(hex);
@@ -88,7 +104,7 @@ public class NumberSystems extends Main {
                 }
                 break;
             case 4: // Octal
-                int octal = Integer.parseInt(number, 8);
+                int octal = Integer.parseInt(String.valueOf((int) number), 8);
                 switch (newMode) {
                     case 1:
                         result = String.valueOf(octal);
@@ -100,17 +116,15 @@ public class NumberSystems extends Main {
                         result = Integer.toHexString(octal);
                         break;
                     case 4:
-                        result = number;
+                        result = String.valueOf((int) number);
                         break;
                 }
                 break;
         }
 
-        return "Converted NUmber: " + result;
-
+        return "Converted Number: " + result;
     }
 }
-
 
 
 
