@@ -37,7 +37,7 @@ public class Finance extends Main {
                     SimpleInterest();
                     break;
                 case 2:
-                    CompundInterest();
+                    CompoundInterest();
                     break;
                 case 3:
                     LoanCalculation();
@@ -51,6 +51,8 @@ public class Finance extends Main {
                 case 6:
                     BreakEvenAnalysis();
                     break;
+                default:
+                    System.out.println("Invalid Option!");
 
             }
         }
@@ -58,15 +60,57 @@ public class Finance extends Main {
     }
 
     private static void SimpleInterest() {
+        Scanner input = new Scanner(System.in);
 
+        System.out.print("Enter Principal (P): ");
+        double principal = input.nextDouble();
+
+        System.out.print("Enter Annual Interest Rate (APR) (%) (R): ");
+        double rate = input.nextDouble();
+
+        System.out.print("Enter Time in years (T): ");
+        double time = input.nextDouble();
+
+        double interest = (principal * rate * time) / 100;
+        System.out.printf("Simple Interest: %.2f\n", interest);
     }
 
-    private static void CompundInterest() {
+    private static void CompoundInterest() {
+        Scanner input = new Scanner(System.in);
 
+        System.out.print("Enter Principal (P): ");
+        double principal = input.nextDouble();
+
+        System.out.print("Enter Annual Interest Rate (APR) (%) (R): ");
+        double rate = input.nextDouble();
+
+        System.out.print("Enter Number of Times Interest is Compounded per years (n): ");
+        int n = input.nextInt();
+
+        System.out.print("Enter Time in years (T): ");
+        double time = input.nextDouble();
+
+        double amount = principal * Math.pow(1 + (rate / 100) / n, n * time);
+        System.out.printf("Compound Interest: %.2f\n", amount - principal);
+        System.out.printf("Total Amount: %.2f\n", amount);
     }
 
     private static void LoanCalculation() {
+        Scanner input = new Scanner(System.in);
 
+        System.out.print("Enter Loan Amount: ");
+        double loanAmount = input.nextDouble();
+
+        System.out.print("Enter Annual Interest Rate (%) (R): ");
+        double annualRate = input.nextDouble() / 100 / 12;
+
+        System.out.print("Enter Loan Term in Months: ");
+        int months = input.nextInt();
+
+        double payment = (loanAmount * annualRate * Math.pow(1 + annualRate, months)) /
+                (Math.pow(1 + annualRate, months) - 1);
+
+        System.out.printf("Monthly Loan Payment: %.2f\n", payment);
     }
 
     private static void CurrencyConverter() {

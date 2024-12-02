@@ -9,12 +9,12 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     private static void SelectMode() {
-        System.out.print("\nSelect Mode:\t1. Basic; 2. Algebra; 3. Finance; 4. Trigonometry; 5. Geometry; " +
+        System.out.print("%n Select Mode:\t1. Basic; 2. Algebra; 3. Finance; 4. Trigonometry; 5. Geometry; " +
                 "6. Statistics; 7. Probability; 8. Number System Converter\n>>> ");
         int mode = input.nextInt();
         while (mode < 1 || mode > 8) {
             System.out.println("\nInvalid selection. Please try again.");
-            System.out.print("\nSelect Mode:\t1. Basic; 2. Algebra; 3. Finance; 4. Trigonometry; 5. Geometry; " +
+            System.out.print("%n Select Mode:\t1. Basic; 2. Algebra; 3. Finance; 4. Trigonometry; 5. Geometry; " +
                     "6. Statistics; 7. Probability; 8. Number System Converter\n>>> ");
             mode = input.nextInt();
         }
@@ -39,7 +39,7 @@ public class Main {
                 NumberSystems.CalculateNumberSystem();
                 break;
             default:
-                System.out.println("\nInvalid selection. Please try again.");
+                System.out.println("\n Invalid selection. Please try again.");
 
         }
     }
