@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class NumberSystems extends Main {
 
-    // Prompting user to choose from available translations
-    public static void Options() {
+    // User NumberSystem Options Prompt
+    private static void Options() {
         System.out.println("Select your number System");
         System.out.println("----------------------------");
         System.out.println("1 --> Decimal (Base 10)");
@@ -16,19 +16,20 @@ public class NumberSystems extends Main {
     }
 
     // Method to listen for user mode/input and calculate answer
-    public static String Calculate() {
+    public static void CalculateNumberSystem() {
+        // Determine Variables to be used
         byte mode;
         int number;
         byte newMode;
         String result = "";
 
+        Scanner input = new Scanner(System.in);
+        mode = input.nextByte();
+        //Display Options
         Options();
 
-        Scanner input = new Scanner(System.in);// Scanner Obj => 'input'
-        mode = input.nextByte();
-
         // Error handling to make sure user enters byte within range
-        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 5 || mode < 0) {
+        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 5 || mode < 1) {
             System.out.println("Invalid -> Try again\n");
             Options();
             mode = input.nextByte();
@@ -46,7 +47,7 @@ public class NumberSystems extends Main {
         Options();
         newMode = input.nextByte();
 
-        while (!Validate.isNumeric(String.valueOf(newMode)) || newMode > 5 || newMode < 0) {
+        while (!Validate.isNumeric(String.valueOf(newMode)) || newMode > 5 || newMode < 1) {
             System.out.println("Invalid -> Try again\n");
             Options();
             newMode = input.nextByte();
@@ -122,7 +123,7 @@ public class NumberSystems extends Main {
                 break;
         }
 
-        return "Converted Number: " + result;
+        System.out.println("Converted Number: " + result);
     }
 }
 

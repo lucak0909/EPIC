@@ -33,9 +33,10 @@ public class Main {
             case 2:
                 Algebra.SelectMode();
                 break;
-            // Add more cases for other modes
+            case 3:
+                Finance.CalculateFinance();
             case 8:
-                System.out.println(NumberSystems.Calculate());
+                NumberSystems.CalculateNumberSystem();
                 break;
             default:
                 System.out.println("\nInvalid selection. Please try again.");
