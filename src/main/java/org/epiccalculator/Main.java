@@ -35,6 +35,7 @@ public class Main {
                 break;
             case 3:
                 Finance.CalculateFinance();
+                break;
             case 8:
                 NumberSystems.CalculateNumberSystem();
                 break;
