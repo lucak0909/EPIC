@@ -114,14 +114,52 @@ public class Finance extends Main {
     }
 
     private static void CurrencyConverter() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter amount in USD ($): ");
+        double usd = input.nextDouble();
+
+        System.out.print("Enter Conversion rate to EUR (): ");
+        double conversionRate = input.nextDouble();
+
+        double eur = usd * conversionRate;
+        System.out.printf("Equivalent Amount in EUR: %.2f\n", eur);
 
     }
 
     private static void TaxCalculation() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter Total Income: ");
+        double income = input.nextDouble();
+
+        System.out.print("Enter Tax Rate (%) (R): ");
+        double taxRate = input.nextDouble();
+
+        double tax = (income * taxRate) / 100;
+        System.out.printf("Tax Amount: %.2f\n", tax);
+        System.out.printf("Net Income After Tax: %.2f\n", income - tax);
 
     }
 
     private static void BreakEvenAnalysis() {
+        Scanner input = new Scanner(System.in);
 
+        System.out.print("Enter Fixed Costs: ");
+        double fixedCosts = input.nextDouble();
+
+        System.out.print("Enter variable cosst per unit: ");
+        double variableCosts = input.nextDouble();
+
+        System.out.print("Enter price per unit: ");
+        double pricePerUnit = input.nextDouble();
+
+        if (pricePerUnit <=variableCosts){
+            System.out.println("No break-even point; variable costs exceed or equal price");
+            return;
+        }
+
+        double breakEvenPoint = fixedCosts / (pricePerUnit- variableCosts);
+        System.out.printf("Break-Even Point (units) : %.2f%n", breakEvenPoint);
     }
 }
