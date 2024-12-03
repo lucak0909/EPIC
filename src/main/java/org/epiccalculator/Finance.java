@@ -19,17 +19,17 @@ public class Finance extends Main {
     // Find user mode selection
     public static void CalculateFinance() {
         Scanner input = new Scanner(System.in);
-        //Display options
-        Options();
+        int mode;
 
-        // Store user choice in mode var => Switch case
-        byte mode;
-        mode = input.nextByte();
-        //Error handling | User input must be a number within option range
-        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 6 || mode < 1) {
-            System.out.println("Invalid -> Try again\n");
-            Options();
-            mode = input.nextByte();
+        do {
+            Options(); // Display options
+            while (!input.hasNextInt()) { // Ensure input is an integer
+                System.out.println("Invalid input. Please enter a number between 1 and 6.");
+                input.nextLine(); // Clear invalid input
+                Options();
+            }
+            mode = input.nextInt();
+            input.nextLine(); // Clear buffer after number input
 
             // Switch case to perform coherent method
             switch (mode) {
@@ -55,7 +55,7 @@ public class Finance extends Main {
                     System.out.println("Invalid Option!");
 
             }
-        }
+        } while( mode <1 || mode > 6);
 
     }
 
@@ -116,10 +116,10 @@ public class Finance extends Main {
     private static void CurrencyConverter() {
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Enter amount in USD ($): ");
+        System.out.print("Enter Amount in USD ($): ");
         double usd = input.nextDouble();
 
-        System.out.print("Enter Conversion rate to EUR (): ");
+        System.out.print("Enter Conversion Rate to EUR (€): ");
         double conversionRate = input.nextDouble();
 
         double eur = usd * conversionRate;
@@ -138,7 +138,7 @@ public class Finance extends Main {
 
         double tax = (income * taxRate) / 100;
         System.out.printf("Tax Amount: %.2f\n", tax);
-        System.out.printf("Net Income After Tax: %.2f\n", income - tax);
+        System.out.printf("Net Income after Tax: %.2f\n", income - tax);
 
     }
 
@@ -148,18 +148,18 @@ public class Finance extends Main {
         System.out.print("Enter Fixed Costs: ");
         double fixedCosts = input.nextDouble();
 
-        System.out.print("Enter variable cosst per unit: ");
+        System.out.print("Enter Variable Costs per Unit: ");
         double variableCosts = input.nextDouble();
 
-        System.out.print("Enter price per unit: ");
+        System.out.print("Enter Price per Unit: ");
         double pricePerUnit = input.nextDouble();
 
         if (pricePerUnit <=variableCosts){
-            System.out.println("No break-even point; variable costs exceed or equal price");
+            System.out.println("No Break-Even Point; Variable Costs Exceed or Equal Price");
             return;
         }
 
         double breakEvenPoint = fixedCosts / (pricePerUnit- variableCosts);
-        System.out.printf("Break-Even Point (units) : %.2f%n", breakEvenPoint);
+        System.out.printf("Break-Even Point (Units) : %.2f%n", breakEvenPoint);
     }
 }
