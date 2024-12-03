@@ -25,7 +25,6 @@ public class Finance extends Main {
             Options(); // Display options
             while (!input.hasNextInt()) { // Ensure input is an integer
                 System.out.println("Invalid input. Please enter a number between 1 and 6.");
-                input.nextLine(); // Clear invalid input
                 Options();
             }
             mode = input.nextInt();
