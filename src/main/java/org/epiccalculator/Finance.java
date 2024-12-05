@@ -1,7 +1,9 @@
 package org.epiccalculator;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Finance extends Main {
+
 
     // User Financial Options Prompt
     private static void Options() {
@@ -16,19 +18,21 @@ public class Finance extends Main {
         System.out.print(">>>");
     }
 
+
+    private static Scanner input = new Scanner(System.in);
+
     // Find user mode selection
     public static void CalculateFinance() {
-        Scanner input = new Scanner(System.in);
-        int mode;
 
-        do {
-            Options(); // Display options
-            while (!input.hasNextInt()) { // Ensure input is an integer
-                System.out.println("Invalid input. Please enter a number between 1 and 6.");
-                Options();
+        try {
+            Options();
+            byte mode = input.nextByte();
+            input.nextLine();
+
+            // Display options
+            if (mode < 1 || mode > 6) {
+                throw new IllegalArgumentException("Invalid option. Please enter enter a valid option from 1-6.");
             }
-            mode = input.nextInt();
-            input.nextLine(); // Clear buffer after number input
 
             // Switch case to perform coherent method
             switch (mode) {
@@ -54,8 +58,13 @@ public class Finance extends Main {
                     System.out.println("Invalid Option!");
 
             }
-        } while( mode <1 || mode > 6);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
 
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input. Please enter a number.");
+            input.nextLine();
+        }
     }
 
     private static void SimpleInterest() {
