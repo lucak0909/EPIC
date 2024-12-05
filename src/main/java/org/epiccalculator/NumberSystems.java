@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class NumberSystems extends Main {
 
     // User NumberSystem Options Prompt
-    private static void Options() {
+    private static void options() {
         System.out.println("Select your number System");
         System.out.println("----------------------------");
         System.out.println("1 --> Decimal (Base 10)");
@@ -17,6 +17,10 @@ public class NumberSystems extends Main {
 
     // Method to listen for user mode/input and calculate answer
     public static void CalculateNumberSystem() {
+
+        //Display Options
+        options();
+
         // Determine Variables to be used
         byte mode;
         int number;
@@ -25,13 +29,11 @@ public class NumberSystems extends Main {
 
         Scanner input = new Scanner(System.in);
         mode = input.nextByte();
-        //Display Options
-        Options();
 
         // Error handling to make sure user enters byte within range
         while (!Validate.isNumeric(String.valueOf(mode)) || mode > 5 || mode < 1) {
             System.out.println("Invalid -> Try again\n");
-            Options();
+            options();
             mode = input.nextByte();
         }
 
@@ -44,12 +46,12 @@ public class NumberSystems extends Main {
             number = input.nextInt();
         }
 
-        Options();
+        options();
         newMode = input.nextByte();
 
         while (!Validate.isNumeric(String.valueOf(newMode)) || newMode > 5 || newMode < 1) {
             System.out.println("Invalid -> Try again\n");
-            Options();
+            options();
             newMode = input.nextByte();
         }
 

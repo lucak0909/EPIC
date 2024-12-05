@@ -36,7 +36,10 @@ public class Main {
             case 3:
                 Finance.CalculateFinance();
                 break;
+            case 7:
+                Probability.CalculateProbability();
             case 8:
+
                 NumberSystems.CalculateNumberSystem();
                 break;
             default:
