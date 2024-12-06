@@ -35,32 +35,27 @@ public class Probability extends Main {
             mode = input.nextByte();
         }
 
-        ProbabilityCalculation calculation = null;
+        ProbabilityCalculation calculation = switch (mode) {
+            case 1 -> new BasicProbability();
+            case 2 -> new Permutations();
+            case 3 -> new Combinations();
+            case 4 -> new BinomialDistribution();
+            case 5 -> new NormalDistribution();
+            case 6 -> new HypothesisTesting();
+            case 7 -> new ConfidenceIntervals();
+            case 8 -> new RegressionAnalysis();
+            case 9 -> new MonteCarloSimulation();
+            default -> null;
+        };
 
-        switch (mode) {
-            case 1:
-                calculation = new BasicProbability();
-                break;
-            case 2:
-                calculation = new Permutations();
-                break;
-            case 3:
-                calculation = new Combinations();
-                break;
-            // Add cases for other calculations
-        }
-
-        if (calculation != null) {
-            calculation.calculate();
-        } else {
-            System.out.println("Invalid selection.");
-        }
+        calculation.calculate();
     }
 }
 
 interface ProbabilityCalculation {
     void calculate();
 }
+
 
 class BasicProbability implements ProbabilityCalculation {
     @Override
@@ -83,4 +78,46 @@ class Combinations implements ProbabilityCalculation {
     }
 }
 
-// Similarly, create classes for other calculations
+class BinomialDistribution implements ProbabilityCalculation {
+    @Override
+    public void calculate() {
+        // Implementation for combinations calculation
+    }
+}
+
+class NormalDistribution implements ProbabilityCalculation {
+    @Override
+    public void calculate() {
+        // Implementation for normal distribution calculation
+    }
+}
+
+class HypothesisTesting implements ProbabilityCalculation {
+    @Override
+    public void calculate() {
+        // Implementation for hypothesis testing calculation
+    }
+}
+
+class ConfidenceIntervals implements ProbabilityCalculation {
+    @Override
+    public void calculate() {
+        // Implementation for regression analysis calculation
+    }
+}
+
+
+class RegressionAnalysis implements ProbabilityCalculation {
+    @Override
+    public void calculate() {
+        // Implementation for regression analysis calculation
+    }
+}
+
+class MonteCarloSimulation implements ProbabilityCalculation {
+    @Override
+    public void calculate() {
+        // Implementation for Monte Carlo simulation calculation
+    }
+}
+

@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class NumberSystems extends Main {
 
-    // User NumberSystem Options Prompt
     private static void options() {
         System.out.println("Select your number System");
         System.out.println("----------------------------");
@@ -15,10 +14,8 @@ public class NumberSystems extends Main {
         System.out.print(">>>");
     }
 
-    // Method to listen for user mode/input and calculate answer
     public static void CalculateNumberSystem() {
-
-        //Display Options
+        // Display options
         options();
 
         // Determine Variables to be used
@@ -31,13 +28,13 @@ public class NumberSystems extends Main {
         mode = input.nextByte();
 
         // Error handling to make sure user enters byte within range
-        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 5 || mode < 1) {
+        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 4 || mode < 1) {
             System.out.println("Invalid -> Try again\n");
             options();
             mode = input.nextByte();
         }
 
-        System.out.println("Enter your number:");
+        System.out.println("Enter an integer:");
         number = input.nextInt();
 
         while (!Validate.isNumeric(String.valueOf(number))) {
@@ -49,83 +46,82 @@ public class NumberSystems extends Main {
         options();
         newMode = input.nextByte();
 
-        while (!Validate.isNumeric(String.valueOf(newMode)) || newMode > 5 || newMode < 1) {
+        while (!Validate.isNumeric(String.valueOf(newMode)) || newMode > 4 || newMode < 1) {
             System.out.println("Invalid -> Try again\n");
             options();
             newMode = input.nextByte();
         }
 
-        switch (mode) {
-            case 1: // Decimal
-                switch (newMode) {
-                    case 1:
-                        result = String.valueOf(number);
-                        break;
-                    case 2:
-                        result = Integer.toBinaryString((int) number);
-                        break;
-                    case 3:
-                        result = Integer.toHexString((int) number);
-                        break;
-                    case 4:
-                        result = Integer.toOctalString((int) number);
-                        break;
-                }
-                break;
-            case 2: // Binary
-                int binary = Integer.parseInt(String.valueOf((int) number), 2);
-                switch (newMode) {
-                    case 1:
-                        result = String.valueOf(binary);
-                        break;
-                    case 2:
-                        result = String.valueOf((int) number);
-                        break;
-                    case 3:
-                        result = Integer.toHexString(binary);
-                        break;
-                    case 4:
-                        result = Integer.toOctalString(binary);
-                        break;
-                }
-                break;
-            case 3: // Hexadecimal
-                int hex = Integer.parseInt(String.valueOf((int) number), 16);
-                switch (newMode) {
-                    case 1:
-                        result = String.valueOf(hex);
-                        break;
-                    case 2:
-                        result = Integer.toBinaryString(hex);
-                        break;
-                    case 3:
-                        result = String.valueOf((int) number);
-                        break;
-                    case 4:
-                        result = Integer.toOctalString(hex);
-                        break;
-                }
-                break;
-            case 4: // Octal
-                int octal = Integer.parseInt(String.valueOf((int) number), 8);
-                switch (newMode) {
-                    case 1:
-                        result = String.valueOf(octal);
-                        break;
-                    case 2:
-                        result = Integer.toBinaryString(octal);
-                        break;
-                    case 3:
-                        result = Integer.toHexString(octal);
-                        break;
-                    case 4:
-                        result = String.valueOf((int) number);
-                        break;
-                }
-                break;
-        }
+        NumberSystemConversion conversion = switch (mode) {
+            case 1 -> new DecimalConversion();
+            case 2 -> new BinaryConversion();
+            case 3 -> new HexadecimalConversion();
+            case 4 -> new OctalConversion();
+            default -> null;
+        };
+
+        conversion.convert(number, newMode);
 
         System.out.println("Converted Number: " + result);
+    }
+}
+
+interface NumberSystemConversion {
+    String convert(int number, byte newMode);
+}
+
+class DecimalConversion implements NumberSystemConversion {
+    @Override
+    public String convert(int number, byte newMode) {
+        return switch (newMode) {
+            case 1 -> String.valueOf(number);
+            case 2 -> Integer.toBinaryString(number);
+            case 3 -> Integer.toHexString(number);
+            case 4 -> Integer.toOctalString(number);
+            default -> "";
+        };
+    }
+}
+
+class BinaryConversion implements NumberSystemConversion {
+    @Override
+    public String convert(int number, byte newMode) {
+        int binary = Integer.parseInt(String.valueOf(number), 2);
+        return switch (newMode) {
+            case 1 -> String.valueOf(binary);
+            case 2 -> String.valueOf(number);
+            case 3 -> Integer.toHexString(binary);
+            case 4 -> Integer.toOctalString(binary);
+            default -> "";
+        };
+    }
+}
+
+class HexadecimalConversion implements NumberSystemConversion {
+    @Override
+    public String convert(int number, byte newMode) {
+        int hex = Integer.parseInt(String.valueOf(number), 16);
+        return switch (newMode) {
+            case 1 -> String.valueOf(hex);
+            case 2 -> Integer.toBinaryString(hex);
+            case 3 -> String.valueOf(number);
+            case 4 -> Integer.toOctalString(hex);
+            default -> "";
+        };
+    }
+}
+
+class OctalConversion implements NumberSystemConversion {
+    @Override
+    public String convert(int number, byte newMode) {
+        int octal = Integer.parseInt(String.valueOf(number), 8);
+        return switch (newMode) {
+            case 1 -> String.valueOf(octal);
+            case 2 -> Integer.toBinaryString(octal);
+            case 3 -> Integer.toHexString(octal);
+            case 4 -> String.valueOf(number);
+            default -> "";
+        };
     }
 }
 
