@@ -34,7 +34,7 @@ public class NumberSystems extends Main {
             mode = input.nextByte();
         }
 
-        System.out.println("Enter an integer:");
+        System.out.println("Enter an integer: ");
         number = input.nextInt();
 
         while (!Validate.isNumeric(String.valueOf(number))) {
@@ -60,15 +60,21 @@ public class NumberSystems extends Main {
             default -> null;
         };
 
-        conversion.convert(number, newMode);
+        if (conversion != null) {
+            result = conversion.convert(number, newMode);
+        } else {
+            System.out.println("Invalid selection.");
+        }
 
         System.out.println("Converted Number: " + result);
     }
+
 }
 
 interface NumberSystemConversion {
     String convert(int number, byte newMode);
 }
+
 
 class DecimalConversion implements NumberSystemConversion {
     @Override

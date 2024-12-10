@@ -16,6 +16,7 @@ public class Probability extends Main {
         System.out.println("7 --> Confidence Intervals");
         System.out.println("8 --> Regression Analysis");
         System.out.println("9 --> Monte Carlo Simulation");
+        System.out.print(">>> ");
     }
 
     public static void CalculateProbability() {
@@ -53,6 +54,7 @@ public class Probability extends Main {
 }
 
 interface ProbabilityCalculation {
+    Scanner input = new Scanner(System.in);
     void calculate();
 }
 
@@ -61,7 +63,24 @@ class BasicProbability implements ProbabilityCalculation {
     @Override
     public void calculate() {
         // Implementation for basic probability calculation
+        int favorableOutcomes = 0; // set to null to initialise while loop
+        int totalOutcomes = 0;
+
+        while (!Main.Validate.isNumeric(String.valueOf(favorableOutcomes)) || favorableOutcomes <= 0) {
+            System.out.println("Enter the number of favorable outcomes:");
+            favorableOutcomes = input.nextInt();
+        }
+
+        while (!Main.Validate.isNumeric(String.valueOf(totalOutcomes)) || totalOutcomes <= 0) {
+            System.out.println("Enter the number of total outcomes:");
+            totalOutcomes = input.nextInt();
+        }
+
+
+        double probability = (double) favorableOutcomes / (double) totalOutcomes;
+        System.out.printf("The probability is: %.2f%%\n", probability * 100);
     }
+
 }
 
 class Permutations implements ProbabilityCalculation {

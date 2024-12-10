@@ -38,8 +38,8 @@ public class Main {
                 break;
             case 7:
                 Probability.CalculateProbability();
+                break;
             case 8:
-
                 NumberSystems.CalculateNumberSystem();
                 break;
             default:
