@@ -49,7 +49,11 @@ public class Probability extends Main {
             default -> null;
         };
 
-        calculation.calculate();
+        if (calculation != null) {
+            calculation.calculate();
+        } else {
+            System.out.println("Invalid selection.");
+        }
     }
 }
 
@@ -87,13 +91,69 @@ class Permutations implements ProbabilityCalculation {
     @Override
     public void calculate() {
         // Implementation for permutations calculation
+        // [ P(n, r) = \frac{n!}{(n-r)!} ] -> Formula for permutations (Repetition Allowed) :)
+        /* Permutation Example: How many 3-letter words can be formed using the letters from the word "FABLE"?
+        [ 5P3 = \frac{5!}{(5-3)!} = \frac{5!}{2!} = 5 \times 4 \times 3 = 60 ] Therefore, there are 60 3-letter words that can be formed
+         */
+
+        int n;
+        int r;
+
+        System.out.println("Total number of objects: ");
+        n = input.nextInt();
+        System.out.println("Number of objects to arrange: ");
+        r = input.nextInt();
+
+        int permutations  = calculatePermutations(n , r);
+        System.out.println("Number of possible permutations: " + permutations);
     }
+
+        private static int calculatePermutations (int n, int r){
+            return factorial(n) / factorial(n - r);
+        }
+
+        private static int factorial (int num){
+            int result = 1;
+            for (int i = 1; i <= num; i++) {
+                result *= i;
+            }
+            return result;
+        }
+
 }
 
 class Combinations implements ProbabilityCalculation {
     @Override
     public void calculate() {
         // Implementation for combinations calculation
+        //[ C(n, r) = \frac{n!}{r!(n-r)!} ] -> Formula for combinations
+
+        /* Combination Example: How many ways can a committee of 5 members be formed from a group of 10 people?
+        [ 10C5 = \frac{10!}{5!(10-5)!} = \frac{10!}{5!5!} = 252 ] Therefore, there are 252 ways to form the committee
+         */
+
+        int n;
+        int r;
+
+        System.out.println("Total number of objects: ");
+        n = input.nextInt();
+        System.out.println("Number of objects to choose from: ");
+        r = input.nextInt();
+
+        int combinations = calculateCombinations(n, r);
+        System.out.println("Number of possible combinations: " + combinations);
+    }
+
+    private static int calculateCombinations(int n, int r) {
+        return factorial(n) / (factorial(r) * factorial(n - r));
+        }
+
+    private static int factorial(int num) {
+        int result = 1;
+        for (int i = 1; i <= num; i++) {
+            result *= i;
+        }
+        return result;
     }
 }
 
