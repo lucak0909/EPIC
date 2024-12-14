@@ -58,7 +58,19 @@ public class Probability extends Main {
 interface ProbabilityCalculation {
     Scanner input = new Scanner(System.in);
     void calculate();
+
+    //Methods used throughout calculations
+    static int factorial (int num) {
+        int result = 1;
+        for (int i = 1; i <= num; i++) {
+            result *= i;
+        }
+        return result;
+    }
+
 }
+
+
 
 
 class BasicProbability implements ProbabilityCalculation {
@@ -92,28 +104,25 @@ class Permutations implements ProbabilityCalculation {
         [ 5P3 = \frac{5!}{(5-3)!} = \frac{5!}{2!} = 5 \times 4 \times 3 = 60 ] Therefore, there are 60 3-letter words that can be formed
          */
 
-        int n;
-        int r;
+        int n = 0;
+        int r = 0;
 
-        System.out.println("Total number of objects: ");
-        n = input.nextInt();
-        System.out.println("Number of objects to arrange: ");
-        r = input.nextInt();
+        while (!Main.Validate.isNumeric(String.valueOf(n)) || n <= 0) {
+            System.out.println("Number of object to arrange: ");
+            n = input.nextInt();
+        }
+
+        while (!Main.Validate.isNumeric(String.valueOf(n)) || n <= 0) {
+            System.out.println("Total number of objects: ");
+            n = input.nextInt();
+        }
 
         int permutations  = calculatePermutations(n , r);
         System.out.println("Number of possible permutations: " + permutations);
     }
 
         private static int calculatePermutations (int n, int r){
-            return factorial(n) / factorial(n - r);
-        }
-
-        private static int factorial (int num){
-            int result = 1;
-            for (int i = 1; i <= num; i++) {
-                result *= i;
-            }
-            return result;
+            return ProbabilityCalculation.factorial(n) / ProbabilityCalculation.factorial(n - r);
         }
 
 }
@@ -127,28 +136,26 @@ class Combinations implements ProbabilityCalculation {
         [ 10C5 = \frac{10!}{5!(10-5)!} = \frac{10!}{5!5!} = 252 ] Therefore, there are 252 ways to form the committee
          */
 
-        int n;
-        int r;
+        int n = 0;
+        int r = 0;
 
-        System.out.println("Total number of objects: ");
-        n = input.nextInt();
-        System.out.println("Number of objects to choose from: ");
-        r = input.nextInt();
+        while (!Main.Validate.isNumeric(String.valueOf(n)) || n <= 0) {
+            System.out.println("Number of object: ");
+            n = input.nextInt();
+        }
+
+        while (!Main.Validate.isNumeric(String.valueOf(r)) || r <= 0) {
+            System.out.println("Objects to choose from: ");
+            r = input.nextInt();
+        }
         int combinations = calculateCombinations(n, r);
         System.out.println("Number of possible combinations: " + combinations);
     }
 
     private static int calculateCombinations(int n, int r) {
-        return factorial(n) / (factorial(r) * factorial(n - r));
+        return ProbabilityCalculation.factorial(n) / (ProbabilityCalculation.factorial(r) * ProbabilityCalculation.factorial(n - r));
         }
 
-    private static int factorial(int num) {
-        int result = 1;
-        for (int i = 1; i <= num; i++) {
-            result *= i;
-        }
-        return result;
-    }
 }
 
 
