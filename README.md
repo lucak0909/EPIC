@@ -1,0 +1,3 @@
+Welcome to our Multi Function Calculator ...
+Designed, specifially to tailor to the needs of students !
+Whatever academic discipline you're pursuing, We can help you.

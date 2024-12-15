@@ -28,7 +28,7 @@ public class NumberSystems extends Main {
         mode = input.nextByte();
 
         // Error handling to make sure user enters byte within range
-        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 4 || mode < 1) {
+        while (!Main.Validate.isNumeric(String.valueOf(mode)) || mode > 4 || mode < 1) {
             System.out.println("Invalid -> Try again\n");
             options();
             mode = input.nextByte();
@@ -46,7 +46,7 @@ public class NumberSystems extends Main {
         options();
         newMode = input.nextByte();
 
-        while (!Validate.isNumeric(String.valueOf(newMode)) || newMode > 4 || newMode < 1) {
+        while (!Main.Validate.isNumeric(String.valueOf(newMode)) || newMode > 4 || newMode < 1) {
             System.out.println("Invalid -> Try again\n");
             options();
             newMode = input.nextByte();

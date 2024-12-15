@@ -23,18 +23,24 @@ public class Main {
             case 1:
                 System.out.print("Enter an equation (e.g., 5 + 3):\n>>>");
                 String equation = input.nextLine();
-                while (! Validate.isValidEquation(equation)) {
+                while (!Validate.isValidEquation(equation)) {
                     System.out.println("Invalid equation format. Please try again.");
                     System.out.print("Enter an equation (e.g., 5 + 3):\n>>>");
                     equation = input.nextLine();
                 }
-                calculate(equation);
+                System.out.println(Main.calculate(equation));
                 break;
             case 2:
-                Algebra.SelectMode();
+                // Algebra.SelectMode();
                 break;
             case 3:
                 Finance.CalculateFinance();
+                break;
+            case 4:
+                Trigonometry.trigFunctions();
+                break;
+            case 5:
+                // Geometry.calculateGeometry();
                 break;
             case 7:
                 Probability.CalculateProbability();
