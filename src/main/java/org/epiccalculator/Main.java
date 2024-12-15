@@ -31,10 +31,16 @@ public class Main {
                 System.out.println(Main.calculate(equation));
                 break;
             case 2:
-                Algebra.SelectMode();
+                // Algebra.SelectMode();
                 break;
             case 3:
                 Finance.CalculateFinance();
+                break;
+            case 4:
+                Trigonometry.calculateTrigonometry();
+                break;
+            case 5:
+                // Geometry.calculateGeometry();
                 break;
             case 7:
                 Probability.CalculateProbability();
