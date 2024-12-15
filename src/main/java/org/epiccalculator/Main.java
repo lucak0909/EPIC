@@ -34,13 +34,16 @@ public class Main {
                 // Algebra.SelectMode();
                 break;
             case 3:
-                Finance.CalculateFinance();
+                Finance.calculateFinance();
                 break;
             case 4:
                 Trigonometry.trigFunctions();
                 break;
             case 5:
                 // Geometry.calculateGeometry();
+                break;
+            case 6:
+                Statistics.calculateStatistics();
                 break;
             case 7:
                 Probability.CalculateProbability();
