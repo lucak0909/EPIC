@@ -78,7 +78,7 @@ public class Trigonometry extends Main {
     }
 
     public static void trigFunctions() {
-        double angleDegrees;
+        double angleDegrees = 0;
         double angleRadians;
         double result;
 
@@ -165,6 +165,26 @@ public class Trigonometry extends Main {
 
         }
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Select Mode:");
+        System.out.println("1. Solve Triangle");
+        System.out.println("2. Trig Functions");
+        System.out.print(">>> ");
+
+        int mode = input.nextInt();
+
+        switch (mode) {
+            case 1:
+                // solveTriangle();
+                break;
+            case 2:
+                trigFunctions();
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
     }
 
 }

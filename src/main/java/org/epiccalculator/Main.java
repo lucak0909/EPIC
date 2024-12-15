@@ -37,7 +37,7 @@ public class Main {
                 Finance.CalculateFinance();
                 break;
             case 4:
-                Trigonometry.calculateTrigonometry();
+                Trigonometry.trigFunctions();
                 break;
             case 5:
                 // Geometry.calculateGeometry();
