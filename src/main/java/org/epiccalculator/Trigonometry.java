@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class Trigonometry extends Main {
 
+    static double angleDegrees;
+    static double angleRadians;
+    static double result;
+
     public static void calculateTrigonometry() {
         Scanner input = new Scanner(System.in);
 
@@ -29,12 +33,34 @@ public class Trigonometry extends Main {
                 continue; // Skip to the next iteration of the loop
             }
 
-            System.out.print("Enter angle in degrees: ");
-            double angleDegrees = input.nextDouble();
-            double angleRadians = Math.toRadians(angleDegrees);
+            System.out.print("Are you working in degrees or radians?");
+            System.out.println("1. Degrees");
+            System.out.println("2. Radians");
+            System.out.print(">>> ");
 
+            int angleUnit = input.nextInt();
 
-            double result = 0.0;
+            if (angleUnit < 1 || angleUnit > 2) {
+                System.out.println("Invalid choice. Please try again.");
+                continue; // Skip to the next iteration of the loop
+            }
+
+            switch (angleUnit) {
+                case 1:
+                    System.out.print("Enter angle in degrees: ");
+                    angleDegrees = input.nextDouble();
+                    angleRadians = Math.toRadians(angleDegrees);
+                    break;
+                case 2:
+                    System.out.print("Enter angle in radians: ");
+                    angleRadians = input.nextDouble();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    continue; // Skip to the next iteration of the loop
+            }
+
+            result = 0.0;
 
             switch (choice) {
                 case 1:
