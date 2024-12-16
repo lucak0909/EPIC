@@ -102,5 +102,54 @@ public class Algebra extends Main {
 
         return x;
     }
+
+    public static void main(String[] args) {
+        // Example coefficients for a polynomial: 2 + 3x + x^2
+        int[] coefficients = {2, 3, 1};
+
+        // Differentiate the polynomial
+        int[] derivative = differentiate(coefficients);
+        System.out.print("Derivative: ");
+        for (int coef : derivative) {
+            System.out.print(coef + " ");
+        }
+        System.out.println();
+
+        // Find the nth derivative (2nd derivative in this example)
+        int degree = 2;
+        int[] nthDerivative = findNthDerivative(coefficients, degree);
+        System.out.print(degree + "-th Derivative: ");
+        for (int coef : nthDerivative) {
+            System.out.print(coef + " ");
+        }
+        System.out.println();
+
+        // Evaluate the polynomial at x = 2
+        double x = 2;
+        double value = evaluatePolynomial(coefficients, x);
+        System.out.println("Polynomial evaluated at x = " + x + ": " + value);
+
+        // Find a critical point
+        try {
+            double criticalPoint = findCriticalPoint(coefficients, -10, 10, 0.1);
+            System.out.println("Critical Point: " + criticalPoint);
+
+            // Determine the type of critical point
+            String criticalType = findCriticalType(coefficients, criticalPoint);
+            System.out.println("Critical Point Type: " + criticalType);
+        } catch (Exception e) {
+            System.err.println("Error finding critical point: " + e.getMessage());
+        }
+
+        // Generate random samples and determine the shape of the curve
+        double[] samples = generateRandomSamples(10, -10, 10);
+        String shape = determineShape(coefficients, samples);
+        System.out.println("Shape of the curve: " + shape);
+
+        // Newton's Method placeholder
+        double initialGuess = 1;
+        double root = NewtonsMethod(coefficients, initialGuess);
+        System.out.println("Root found using Newton's Method: " + root);
+    }
 }
 
