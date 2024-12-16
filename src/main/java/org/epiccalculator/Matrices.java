@@ -1,4 +1,4 @@
-package org.epiccalculator;
+/*package org.epiccalculator;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -33,3 +33,4 @@ interface MatrixCalculation {
     Scanner input = new Scanner(System.in);
     void calculate();
 }
+*/
