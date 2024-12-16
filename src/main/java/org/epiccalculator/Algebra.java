@@ -1,5 +1,5 @@
 package org.epiccalculator;
-// Mahdi is doing this
+// Mahdi and Luca are doing this
 public class Algebra extends Main {
 
 }
