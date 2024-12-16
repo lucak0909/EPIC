@@ -31,8 +31,16 @@ public class Algebra extends Main {
         return result;
     }
 
-    public static double findCriticalPoint(int[] coefficients, double start, double end, double step) {
-        double criticalPoint = Double.POSITIVE_INFINITY;
+    public static double findCriticalPoint(int[] coefficients, double start, double end, double step) throws Exception {
+        double criticalPoint = 0;
+        if (determineShape(coefficients, generateRandomSamples(100, -1000, 1000)) == "U") {
+            criticalPoint = Double.POSITIVE_INFINITY;
+        }
+        else if (determineShape(coefficients, generateRandomSamples(100, -1000, 1000)) == "N") {
+            criticalPoint = Double.NEGATIVE_INFINITY;
+        }
+        else {throw new Exception("Could not determine shape of function.");}
+
         for (double x = start; x <= end; x += step) {
             double value = evaluatePolynomial(coefficients, x);
             if (value < criticalPoint) {
@@ -64,7 +72,28 @@ public class Algebra extends Main {
         return samples;
     }
 
+    public static String determineShape(int[] coefficients, double[] samplePoints) {
+        int positiveCount = 0;
+        int negativeCount = 0;
 
+        for (double x : samplePoints) {
+            double secondDerivative = evaluatePolynomial(findNthDerivative(coefficients, 2), x);
+            if (secondDerivative > 0) {
+                positiveCount++;
+            } else if (secondDerivative < 0) {
+                negativeCount++;
+            }
+        }
+
+        // Analyze the counts
+        if (positiveCount > negativeCount) {
+            return "U";
+        } else if (negativeCount > positiveCount) {
+            return "N";
+        } else {
+            return "Inconclusive";
+        }
+    }
 
 }
 
