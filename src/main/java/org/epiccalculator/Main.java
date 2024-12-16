@@ -40,7 +40,7 @@ public class Main {
                 Trigonometry.trigFunctions();
                 break;
             case 5:
-                // Geometry.calculateGeometry();
+                Geometry.calculateGeometry();
                 break;
             case 6:
                 Statistics.calculateStatistics();

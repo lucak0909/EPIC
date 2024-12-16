@@ -2,7 +2,7 @@ package org.epiccalculator;
 
 public class Geometry {
 
-    public double Pi = 3.14159265359;
+    public static double Pi = 3.14159265359;
 
     public interface Shape2D {
         double calculatePerimeter();
@@ -14,7 +14,7 @@ public class Geometry {
         double calculateSurfaceArea();
     }
 
-    public class Rectangle implements Shape2D {
+    public static class Rectangle implements Shape2D {
         double length;
         double width;
 
@@ -34,13 +34,13 @@ public class Geometry {
         }
     }
 
-    public class Square extends Rectangle {
+    public static class Square extends Rectangle {
         public Square(double side) {
             super(side, side);
         }
     }
 
-    public class Triangle implements Shape2D {
+    public static class Triangle implements Shape2D {
         double a;
         double b;
         double c;
@@ -63,7 +63,7 @@ public class Geometry {
         }
     }
 
-    public class Circle implements Shape2D {
+    public static class Circle implements Shape2D {
         double radius;
 
         public Circle(double radius) {
@@ -81,7 +81,7 @@ public class Geometry {
         }
     }
 
-    public class Cube implements Shape3D {
+    public static class Cube implements Shape3D {
         double side;
 
         public Cube(double side) {
@@ -99,7 +99,7 @@ public class Geometry {
         }
     }
 
-    public class rectangularPrism implements Shape3D {
+    public static class rectangularPrism implements Shape3D {
         double length;
         double width;
         double height;
@@ -121,7 +121,7 @@ public class Geometry {
         }
     }
 
-    public class Cylinder implements Shape3D {
+    public static class Cylinder implements Shape3D {
         double radius;
         double height;
 
@@ -141,7 +141,7 @@ public class Geometry {
         }
     }
 
-    public class Sphere implements Shape3D {
+    public static class Sphere implements Shape3D {
         double radius;
 
         public Sphere(double radius) {
@@ -159,13 +159,13 @@ public class Geometry {
         }
     }
 
-    public class Cone implements Shape3D {
+    public static class Cone implements Shape3D {
         double radius;
         double height;
-        double baseArea = Pi * radius * radius;
+        double baseArea;
 
-        public Cone(double baseArea, double radius, double height) {
-            this.baseArea = baseArea;
+        public Cone(double radius, double height) {
+            this.baseArea = Pi * radius * radius;
             this.radius = radius;
             this.height = height;
         }
@@ -181,4 +181,152 @@ public class Geometry {
         }
     }
 
+    public static void calculateGeometry() {
+        System.out.println("What type of geometry?");
+        System.out.println("1. 2D Geometry");
+        System.out.println("2. 3D Geometry");
+        System.out.println(">>> ");
+
+        int mode = Main.input.nextInt();
+
+        switch (mode) {
+            case 1:
+                System.out.println("What shape are you calculating?");
+                System.out.println("1. Rectangle");
+                System.out.println("2. Square");
+                System.out.println("3. Triangle");
+                System.out.println("4. Circle");
+                System.out.println(">>> ");
+
+                int shape = Main.input.nextInt();
+
+                switch (shape) {
+                    case 1:
+                        System.out.println("Enter the length and width of the rectangle:");
+                        System.out.print("Length: ");
+                        double length = Main.input.nextDouble();
+                        System.out.print("Width: ");
+                        double width = Main.input.nextDouble();
+
+                        Rectangle rectangle = new Rectangle(length, width);
+                        System.out.println("Perimeter: " + rectangle.calculatePerimeter());
+                        System.out.println("Area: " + rectangle.calculateArea());
+                        break;
+
+                    case 2:
+                        System.out.println("Enter the length of a side of the square:");
+                        System.out.print("Length: ");
+                        double side = Main.input.nextDouble();
+
+                        Square square = new Square(side);
+                        System.out.println("Perimeter: " + square.calculatePerimeter());
+                        System.out.println("Area: " + square.calculateArea());
+                        break;
+
+                    case 3:
+                        System.out.println("Enter the lengths of the three sides of the triangle:");
+                        System.out.print("Side A: ");
+                        double sideA = Main.input.nextDouble();
+                        System.out.print("Side B: ");
+                        double sideB = Main.input.nextDouble();
+                        System.out.print("Side C: ");
+                        double sideC = Main.input.nextDouble();
+
+                        Triangle triangle = new Triangle(sideA, sideB, sideC);
+                        System.out.println("Perimeter: " + triangle.calculatePerimeter());
+                        System.out.println("Area: " + triangle.calculateArea());
+                        break;
+
+                    case 4:
+                        System.out.println("Enter the radius of the circle:");
+                        System.out.print("Radius: ");
+                        double radius = Main.input.nextDouble();
+
+                        Circle circle = new Circle(radius);
+                        System.out.println("Perimeter: " + circle.calculatePerimeter());
+                        System.out.println("Area: " + circle.calculateArea());
+                        break;
+
+                    default:
+                        System.out.println("Invalid shape selection.");
+                        break;
+                }
+
+            case 2:
+                System.out.println("What shape are you calculating?");
+                System.out.println("1. Cube");
+                System.out.println("2. Rectangular Prism");
+                System.out.println("3. Cylinder");
+                System.out.println("4. Sphere");
+                System.out.println("5. Cone");
+                System.out.println(">>> ");
+
+                int shape3D = Main.input.nextInt();
+
+                switch (shape3D) {
+                    case 1:
+                        System.out.println("Enter the side length of the cube:");
+                        System.out.print("Side: ");
+                        double sideCube = Main.input.nextDouble();
+
+                        Cube cube = new Cube(sideCube);
+                        System.out.println("Volume: " + cube.calculateVolume());
+                        System.out.println("Surface Area: " + cube.calculateSurfaceArea());
+                        break;
+
+                    case 2:
+                        System.out.println("Enter the length, width, and height of the rectangular prism:");
+                        System.out.print("Length: ");
+                        double length = Main.input.nextDouble();
+                        System.out.print("Width: ");
+                        double width = Main.input.nextDouble();
+                        System.out.print("Height: ");
+                        double height = Main.input.nextDouble();
+
+                        rectangularPrism rectPrism = new rectangularPrism(length, width, height);
+                        System.out.println("Volume: " + rectPrism.calculateVolume());
+                        System.out.println("Surface Area: " + rectPrism.calculateSurfaceArea());
+                        break;
+
+                    case 3:
+                        System.out.println("Enter the radius and height of the cylinder:");
+                        System.out.print("Radius: ");
+                        double radiusCylinder = Main.input.nextDouble();
+                        System.out.print("Height: ");
+                        double heightCylinder = Main.input.nextDouble();
+
+                        Cylinder cylinder = new Cylinder(radiusCylinder, heightCylinder);
+                        System.out.println("Volume: " + cylinder.calculateVolume());
+                        System.out.println("Surface Area: " + cylinder.calculateSurfaceArea());
+                        break;
+
+                    case 4:
+                        System.out.println("Enter the radius of the sphere:");
+                        System.out.print("Radius: ");
+                        double radiusSphere = Main.input.nextDouble();
+
+                        Sphere sphere = new Sphere(radiusSphere);
+                        System.out.println("Volume: " + sphere.calculateVolume());
+                        System.out.println("Surface Area: " + sphere.calculateSurfaceArea());
+                        break;
+
+                    case 5:
+                        System.out.println("Enter the base-radius and height of the cone:");
+                        System.out.print("Radius: ");
+                        double radiusCone = Main.input.nextDouble();
+                        System.out.print("Height: ");
+                        double heightCone = Main.input.nextDouble();
+
+                        Cone cone = new Cone(radiusCone, heightCone);
+                        System.out.println("Volume: " + cone.calculateVolume());
+                        System.out.println("Surface Area: " + cone.calculateSurfaceArea());
+                        break;
+
+                    default:
+                        System.out.println("Invalid shape selection.");
+                        break;
+                }
+        }
+
+    }
 }
