@@ -2,9 +2,6 @@ package org.epiccalculator;
 
 import java.util.Scanner;
 
-import org.epiccalculator.Algebra;
-
-
 public class Main {
     static Scanner input = new Scanner(System.in);
 
@@ -12,11 +9,13 @@ public class Main {
         System.out.print("\nSelect Mode:\t1. Basic; 2. Algebra; 3. Finance; 4. Trigonometry; 5. Geometry; " +
                 "6. Statistics; 7. Probability; 8. Number System Converter\n>>> ");
         int mode = input.nextInt();
+        input.nextLine(); // consume leftover newline for debugging, taken from chatGPT
         while (mode < 1 || mode > 8) {
             System.out.println("\nInvalid selection. Please try again.");
             System.out.print("\nSelect Mode:\t1. Basic; 2. Algebra; 3. Finance; 4. Trigonometry; 5. Geometry; " +
                     "6. Statistics; 7. Probability; 8. Number System Converter\n>>> ");
             mode = input.nextInt();
+            input.nextLine(); // consume leftover newline for debugging, taken from chatGPT
         }
 
         switch (mode) {
