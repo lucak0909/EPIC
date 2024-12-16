@@ -3,6 +3,7 @@ package org.epiccalculator;
 import java.util.Random;
 
 public class Algebra extends Main {
+
     public static int[] differentiate(int[] coefficients) {
         int n = coefficients.length;
         if (n <= 1) {
@@ -63,6 +64,7 @@ public class Algebra extends Main {
         return type;
     }
 
+    // used for finding shape of curve
     public static double[] generateRandomSamples(int numSamples, double rangeMin, double rangeMax) {
         Random random = new Random();
         double[] samples = new double[numSamples];
@@ -95,5 +97,10 @@ public class Algebra extends Main {
         }
     }
 
+    public static double NewtonsMethod(int[] coefficients, double initialGuess) {
+        double x = initialGuess;
+
+        return x;
+    }
 }
 
