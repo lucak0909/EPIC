@@ -20,6 +20,6 @@ public class Ascii {
                 "                                                                                                                                        \n" +
                 "                                                                                                                                        \n" +
                 "                                                                                                                                        ");
-        System.out.println("Made by: \nLuca Knierim, Oran Dennehy, Mahdi Mirzay, Aaron O' Doherty");
+        System.out.println("Creators: \nLuca Knierim, Oran Dennehy, Mahdi Mirzay, Aaron O' Doherty");
     }
 }
