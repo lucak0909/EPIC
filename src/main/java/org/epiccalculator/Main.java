@@ -43,7 +43,7 @@ public class Main {
                 Geometry.calculateGeometry();
                 break;
             case 6:
-                Statistics.calculateStatistics();
+                //Statistics.calculateStatistics();
                 break;
             case 7:
                 Probability.CalculateProbability();
@@ -64,6 +64,7 @@ public class Main {
             equation = equation.replaceAll("\\s+", "");
             return equation.matches("\\d+[+\\-*/%]\\d+");
         }
+
 
         public static boolean isNumeric(String str) {
             try {
@@ -135,7 +136,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("\n\n\t\tMulti-Functional Calculator\n\t-----------------------------------\n");
+        Ascii.Art();
         while (true) {
             SelectMode();
         }

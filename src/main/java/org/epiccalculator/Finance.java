@@ -77,6 +77,10 @@ public class Finance extends Main {
         System.out.print("Enter Time in years (T): ");
         double time = input.nextDouble();
 
+        if (principal == 0 || rate == 0 || time == 0) {
+            throw new ArithmeticException("Error: Principal, Rate or Time cannot be zero (0).");
+        }
+
         double interest = (principal * rate * time) / 100;
         System.out.printf("Simple Interest: %.2f\n", interest);
     }
@@ -93,6 +97,10 @@ public class Finance extends Main {
         System.out.print("Enter Number of Times Interest is Compounded per years (n): ");
         int n = input.nextInt();
 
+        if (n == 0) {
+            throw new ArithmeticException("Error: Number of compounding periods (n) cannot be zero (0).");
+        }
+
         System.out.print("Enter Time in years (T): ");
         double time = input.nextDouble();
 
@@ -108,7 +116,13 @@ public class Finance extends Main {
         double loanAmount = input.nextDouble();
 
         System.out.print("Enter Annual Interest Rate (%) (R): ");
-        double annualRate = input.nextDouble() / 100 / 12;
+        double annualRate = input.nextDouble();
+
+        if (annualRate == 0) {
+            throw new ArithmeticException("Error: Annual interest rate cannot be zero (0).");
+        }
+
+        annualRate = annualRate / 100 /12;
 
         System.out.print("Enter Loan Term in Months: ");
         int months = input.nextInt();
@@ -128,6 +142,10 @@ public class Finance extends Main {
         System.out.print("Enter Conversion Rate to EUR (€): ");
         double conversionRate = input.nextDouble();
 
+        if (conversionRate == 0) {
+            throw new ArithmeticException("Error: Conversion rate cannot be zero (0).");
+        }
+
         double eur = usd * conversionRate;
         System.out.printf("Equivalent Amount in EUR: %.2f\n", eur);
 
@@ -141,6 +159,10 @@ public class Finance extends Main {
 
         System.out.print("Enter Tax Rate (%) (R): ");
         double taxRate = input.nextDouble();
+
+        if (taxRate == 0) {
+            throw new ArithmeticException("Error: Tax rate cannot be zero (0).");
+        }
 
         double tax = (income * taxRate) / 100;
         System.out.printf("Tax Amount: %.2f\n", tax);
@@ -161,8 +183,7 @@ public class Finance extends Main {
         double pricePerUnit = input.nextDouble();
 
         if (pricePerUnit <= variableCosts) {
-            System.out.println("No Break-Even Point; Variable Costs Exceed or Equal Price");
-            return;
+            throw new IllegalArgumentException("Error: Price per Unit must be greater than variable costs.");
         }
 
         double breakEvenPoint = fixedCosts / (pricePerUnit - variableCosts);

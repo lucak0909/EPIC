@@ -11,10 +11,6 @@ public class Probability extends Main {
         System.out.println("2 --> Permutations");
         System.out.println("3 --> Combinations");
         System.out.println("4 --> Normal Distribution");
-        System.out.println("5 --> Hypothesis Testing");
-        System.out.println("6 --> Confidence Intervals");
-        System.out.println("7 --> Regression Analysis");
-        System.out.println("8 --> Monte Carlo Simulation");
         System.out.print(">>> ");
     }
 
@@ -23,16 +19,16 @@ public class Probability extends Main {
         options();
 
         // Determine Variables to be used
-        byte mode;
+        int mode;
 
         Scanner input = new Scanner(System.in);
-        mode = input.nextByte();
+        mode = input.nextInt();
 
-        // Error handling to make sure user enters byte within range
-        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 9 || mode < 1) {
+        // Error handling to make sure user enters Int within range
+        while (!Validate.isNumeric(String.valueOf(mode)) || mode > 4 || mode < 1) {
             System.out.println("Invalid -> Try again\n");
             options();
-            mode = input.nextByte();
+            mode = input.nextInt();
         }
 
         ProbabilityCalculation calculation = switch (mode) {
@@ -40,10 +36,6 @@ public class Probability extends Main {
             case 2 -> new Permutations();
             case 3 -> new Combinations();
             case 4 -> new NormalDistribution();
-            case 5 -> new HypothesisTesting();
-            case 6 -> new ConfidenceIntervals();
-            case 7 -> new RegressionAnalysis();
-            case 8 -> new MonteCarloSimulation();
             default -> null;
         };
 
@@ -59,24 +51,20 @@ interface ProbabilityCalculation {
     Scanner input = new Scanner(System.in);
     void calculate();
 
-    //Methods used throughout calculations
-    static int factorial (int num) {
-        int result = 1;
+    // method for combinations + permutations
+    static long factorial(int num) {
+        long result = 1;
         for (int i = 1; i <= num; i++) {
             result *= i;
         }
         return result;
     }
-
 }
-
-
-
 
 class BasicProbability implements ProbabilityCalculation {
     @Override
     public void calculate() {
-        int favorableOutcomes = 0; // set to null to initialise while loop
+        int favorableOutcomes = 0; // set to 0 to initialize while loop
         int totalOutcomes = 0;
 
         while (!Main.Validate.isNumeric(String.valueOf(favorableOutcomes)) || favorableOutcomes <= 0) {
@@ -89,11 +77,9 @@ class BasicProbability implements ProbabilityCalculation {
             totalOutcomes = input.nextInt();
         }
 
-
-        double probability = (double) favorableOutcomes / (double) totalOutcomes;
+        double probability = (double) favorableOutcomes / totalOutcomes;
         System.out.printf("The probability is: %.2f%%\n", probability * 100);
     }
-
 }
 
 class Permutations implements ProbabilityCalculation {
@@ -108,23 +94,22 @@ class Permutations implements ProbabilityCalculation {
         int r = 0;
 
         while (!Main.Validate.isNumeric(String.valueOf(n)) || n <= 0) {
-            System.out.println("Number of object to arrange: ");
+            System.out.println("Number of objects to arrange: ");
             n = input.nextInt();
         }
 
-        while (!Main.Validate.isNumeric(String.valueOf(n)) || n <= 0) {
+        while (!Main.Validate.isNumeric(String.valueOf(r)) || r <= 0) {
             System.out.println("Total number of objects: ");
-            n = input.nextInt();
+            r = input.nextInt();
         }
 
-        int permutations  = calculatePermutations(n , r);
+        long permutations = calculatePermutations(n, r);
         System.out.println("Number of possible permutations: " + permutations);
     }
 
-        private static int calculatePermutations (int n, int r){
-            return ProbabilityCalculation.factorial(n) / ProbabilityCalculation.factorial(n - r);
-        }
-
+    private static long calculatePermutations(int n, int r) {
+        return ProbabilityCalculation.factorial(n) / ProbabilityCalculation.factorial(n - r);
+    }
 }
 
 class Combinations implements ProbabilityCalculation {
@@ -140,7 +125,7 @@ class Combinations implements ProbabilityCalculation {
         int r = 0;
 
         while (!Main.Validate.isNumeric(String.valueOf(n)) || n <= 0) {
-            System.out.println("Number of object: ");
+            System.out.println("Number of objects: ");
             n = input.nextInt();
         }
 
@@ -148,67 +133,44 @@ class Combinations implements ProbabilityCalculation {
             System.out.println("Objects to choose from: ");
             r = input.nextInt();
         }
-        int combinations = calculateCombinations(n, r);
+        long combinations = calculateCombinations(n, r);
         System.out.println("Number of possible combinations: " + combinations);
     }
 
-    private static int calculateCombinations(int n, int r) {
+    private static long calculateCombinations(int n, int r) {
         return ProbabilityCalculation.factorial(n) / (ProbabilityCalculation.factorial(r) * ProbabilityCalculation.factorial(n - r));
-        }
-
+    }
 }
-
-
 
 class NormalDistribution implements ProbabilityCalculation {
     @Override
     public void calculate() {
-        // Implementation for normal distribution calculation
-        System.out.println("Mean: ");
-        double mean = input.nextDouble();
-        System.out.println("Standard deviation: ");
-        float dev = input.nextFloat();
-        System.out.println("Value: ");
-        double x = input.nextDouble();
+        double mean = 0.0;
+        double dev = 0.0;
+        double x = 0.0;
+
+        while (!Main.Validate.isNumeric(String.valueOf(mean)) || mean <= 0) {
+            System.out.println("Mean: ");
+            mean = input.nextDouble();
+        }
+
+        while (!Main.Validate.isNumeric(String.valueOf(dev)) || dev <= 0) {
+            System.out.println("Standard Deviation: ");
+            dev = input.nextDouble();
+        }
+
+        while (!Main.Validate.isNumeric(String.valueOf(x)) || x <= 0) {
+            System.out.println("Value: ");
+            x = input.nextDouble();
+        }
 
         double probabilityDensity = calculateNormalDistribution(mean, dev, x);
         System.out.printf("The probability density at x = %.2f is: %.5f\n", x, probabilityDensity);
     }
 
-    private double calculateNormalDistribution(double mean, float dev, double x) {
+    private double calculateNormalDistribution(double mean, double dev, double x) {
         // [ \text{exponent} = \exp\left(-\frac{(x - \text{mean})^2}{2 \cdot \text{stdDev}^2}\right) ]
         double exponent = Math.exp(-Math.pow(x - mean, 2) / (2 * Math.pow(dev, 2)));
         return (1 / (dev * Math.sqrt(2 * Math.PI))) * exponent;
     }
 }
-
-
-class HypothesisTesting implements ProbabilityCalculation {
-    @Override
-    public void calculate() {
-        // Implementation for hypothesis testing calculation
-    }
-}
-
-class ConfidenceIntervals implements ProbabilityCalculation {
-    @Override
-    public void calculate() {
-        // Implementation for regression analysis calculation
-    }
-}
-
-
-class RegressionAnalysis implements ProbabilityCalculation {
-    @Override
-    public void calculate() {
-        // Implementation for regression analysis calculation
-    }
-}
-
-class MonteCarloSimulation implements ProbabilityCalculation {
-    @Override
-    public void calculate() {
-        // Implementation for Monte Carlo simulation calculation
-    }
-}
-
