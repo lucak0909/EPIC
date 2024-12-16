@@ -250,7 +250,9 @@ public class Geometry {
                     default:
                         System.out.println("Invalid shape selection.");
                         break;
+
                 }
+                break;
 
             case 2:
                 System.out.println("What shape are you calculating?");
