@@ -1,6 +1,6 @@
 package org.epiccalculator;
 
-public class Algebra {
+public class Algebra extends Main {
     public static int[] differentiate(int[] coefficients) {
         int n = coefficients.length;
         if (n <= 1) {
@@ -19,6 +19,14 @@ public class Algebra {
             coefficients = differentiate(coefficients);
         }
         return coefficients;
+    }
+
+    public static double evaluatePolynomial(int[] coefficients, double x) {
+        double result = 0;
+        for (int i = 0; i < coefficients.length; i++) {
+            result += coefficients[i] * Math.pow(x, i);
+        }
+        return result;
     }
 }
 
