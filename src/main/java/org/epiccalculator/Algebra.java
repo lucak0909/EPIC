@@ -1,5 +1,7 @@
 package org.epiccalculator;
 
+import java.util.Random;
+
 public class Algebra extends Main {
     public static int[] differentiate(int[] coefficients) {
         int n = coefficients.length;
@@ -28,5 +30,41 @@ public class Algebra extends Main {
         }
         return result;
     }
+
+    public static double findCriticalPoint(int[] coefficients, double start, double end, double step) {
+        double criticalPoint = Double.POSITIVE_INFINITY;
+        for (double x = start; x <= end; x += step) {
+            double value = evaluatePolynomial(coefficients, x);
+            if (value < criticalPoint) {
+                criticalPoint = value;
+            }
+        }
+        if (criticalPoint < 0.25 && criticalPoint > -0.25) {criticalPoint = 0;}
+
+        return criticalPoint;
+    }
+
+    public static String findCriticalType(int[] coefficients, double x) {
+        String type;
+        coefficients = findNthDerivative(coefficients, 2);
+
+        if (evaluatePolynomial(coefficients, x) > 0) {type = "Minimum";}
+        else if (evaluatePolynomial(coefficients, x) < 0) {type = "Maximum";}
+        else {type = "Saddle Point";}
+
+        return type;
+    }
+
+    public static double[] generateRandomSamples(int numSamples, double rangeMin, double rangeMax) {
+        Random random = new Random();
+        double[] samples = new double[numSamples];
+        for (int i = 0; i < numSamples; i++) {
+            samples[i] = rangeMin + (rangeMax - rangeMin) * random.nextDouble();
+        }
+        return samples;
+    }
+
+
+
 }
 
