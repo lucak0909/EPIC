@@ -18,11 +18,13 @@ public class Basic extends Main{
 
         // Split the input string into numbers and operator
         String[] parts = equation.split("[+\\-*/%]");
-        if (parts.length != 2) {
-            throw new IllegalArgumentException("Invalid input format.");
+        double[] nums = new double[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            System.out.println("Part " + (i + 1) + ": " + parts[i]);
+            nums[i] = Double.parseDouble(parts[i]);
         }
-        double num1 = Double.parseDouble(parts[0]);
-        double num2 = Double.parseDouble(parts[1]);
+
+
 
         // Find the operator
         for (int i = 0; i < equation.length(); i++) {
