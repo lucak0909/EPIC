@@ -20,14 +20,7 @@ public class Main {
 
         switch (mode) {
             case 1:
-                System.out.print("Enter an equation (e.g., 5 + 3 - 4):\n>>>");
-                String equation = input.nextLine();
-                while (!Validate.isValidEquation(equation)) {
-                    System.out.println("Invalid equation format. Please try again.");
-                    System.out.print("Enter an equation (e.g., 5 + 3 - 4):\n>>>");
-                    equation = input.nextLine();
-                }
-                System.out.println(Basic.calculate(equation));
+                Basic.calculate();
                 break;
             case 2:
                 Algebra.main(null);

@@ -1,17 +1,23 @@
 /*NEEDED: input validation loops; cleaner CLI */
 package org.epiccalculator;
 
+import java.util.Scanner;
+
 public class Basic extends Main{
 
-    public static double calculate(String input) {
+    public static double calculate() {
+        Scanner input = new Scanner(System.in);
         double result = 0;
         char operator = ' ';
 
+        System.out.print("Enter an equation (e.g., 5 + 3 - 4):\n>>>");
+        String equation = input.nextLine();
+
         // Remove any spaces from the input string
-        input = input.replaceAll("\\s+", "");
+        equation = equation.replaceAll("\\s+", "");
 
         // Split the input string into numbers and operator
-        String[] parts = input.split("[+\\-*/%]");
+        String[] parts = equation.split("[+\\-*/%]");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid input format.");
         }
@@ -19,8 +25,8 @@ public class Basic extends Main{
         double num2 = Double.parseDouble(parts[1]);
 
         // Find the operator
-        for (int i = 0; i < input.length(); i++) {
-            char c = input.charAt(i);
+        for (int i = 0; i < equation.length(); i++) {
+            char c = equation.charAt(i);
             if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
                 operator = c;
                 break;
