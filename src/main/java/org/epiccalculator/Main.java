@@ -39,7 +39,7 @@ public class Main {
                 Trigonometry.main(null);
                 break;
             case 5:
-                Geometry.calculateGeometry();
+                Geometry.main(null);
                 break;
             case 6:
                 Statistics.calculateStatistics();
@@ -50,10 +50,9 @@ public class Main {
             case 8:
                 NumberSystems.CalculateNumberSystem();
                 break;
-            /*case 9:
+            case 9:
                 Matrices.CalculateMatrix();
                 break;
-                */
             default:
                 System.out.println("\nInvalid selection. Please try again.");
 
