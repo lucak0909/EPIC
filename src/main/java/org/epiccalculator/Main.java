@@ -42,7 +42,7 @@ public class Main {
                 Geometry.main(null);
                 break;
             case 6:
-                Statistics.calculateStatistics();
+                //Statistics.calculateStatistics();
                 break;
             case 7:
                 Probability.CalculateProbability();
