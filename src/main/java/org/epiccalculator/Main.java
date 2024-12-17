@@ -50,10 +50,9 @@ public class Main {
             case 8:
                 NumberSystems.CalculateNumberSystem();
                 break;
-            /*case 9:
+            case 9:
                 Matrices.CalculateMatrix();
                 break;
-                */
             default:
                 System.out.println("\nInvalid selection. Please try again.");
 
