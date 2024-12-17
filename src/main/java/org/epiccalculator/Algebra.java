@@ -99,9 +99,32 @@ public class Algebra extends Main {
 
     public static double NewtonsMethod(int[] coefficients, double initialGuess) {
         double x = initialGuess;
+        double tolerance = 1e-7;
+        int maxIterations = 1000;
+        int iterations = 0;
 
-        return x;
+        while (iterations < maxIterations) {
+            double fx = evaluatePolynomial(coefficients, x); // f(x)
+            int[] derivative = differentiate(coefficients); // f'(x)
+            double fPrimeX = evaluatePolynomial(derivative, x);
+
+            if (Math.abs(fPrimeX) < 1e-10) {
+                throw new ArithmeticException("Derivative is too small; Newton's Method may fail.");
+            }
+
+            double xNew = x - fx / fPrimeX;
+
+            if (Math.abs(xNew - x) < tolerance) { // to allow a small error margin
+                return xNew;
+            }
+
+            x = xNew;
+            iterations++;
+        }
+
+        throw new ArithmeticException("Newton's Method did not converge within the maximum number of iterations.");
     }
+
 
     public static void main(String[] args) {
         // Example coefficients for a polynomial: 2 + 3x + x^2
