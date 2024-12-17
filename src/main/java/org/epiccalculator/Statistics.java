@@ -49,6 +49,7 @@ public class Statistics extends Main{
                     break;
                 case 7:
                     numbers = getNumbers(input);
+                    break;
                 default:
                     System.out.println("Invalid choice. Please select a valid option.");
                     break;
