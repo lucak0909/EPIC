@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     static Scanner input = new Scanner(System.in);
 
-    private static void SelectMode() {
+    protected static void SelectMode() {
         System.out.print("\nSelect Mode:\t1. Basic; 2. Algebra; 3. Finance; 4. Trigonometry; 5. Geometry; " +
                 "6. Statistics; 7. Probability; 8. Number System Converter; 9. Matrix Calculation\n>>> ");
         int mode = input.nextInt();
@@ -30,7 +30,7 @@ public class Main {
                 System.out.println(Basic.calculate(equation));
                 break;
             case 2:
-                // Algebra.SelectMode();
+                Algebra.main(null);
                 break;
             case 3:
                 Finance.calculateFinance();
