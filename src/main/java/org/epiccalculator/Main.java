@@ -42,7 +42,7 @@ public class Main {
                 Geometry.calculateGeometry();
                 break;
             case 6:
-                Statistics.calculateStatistics();
+                //Statistics.calculateStatistics();
                 break;
             case 7:
                 Probability.CalculateProbability();
@@ -50,10 +50,9 @@ public class Main {
             case 8:
                 NumberSystems.CalculateNumberSystem();
                 break;
-            /*case 9:
+            case 9:
                 Matrices.CalculateMatrix();
                 break;
-                */
             default:
                 System.out.println("\nInvalid selection. Please try again.");
 
