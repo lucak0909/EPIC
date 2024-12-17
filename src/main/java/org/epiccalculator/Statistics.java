@@ -1,8 +1,9 @@
 package org.epiccalculator;
-import java.util.*;
+import java.util.Scanner;
 
 public class Statistics {
-
+}
+/*
     private static Scanner input = new Scanner(System.in);
 
     public static void calculateStatistics() {
@@ -46,7 +47,13 @@ public class Statistics {
     }
 
     private static double[] getNumbers(Scanner input) {
-        return new double[0];
+        System.out.println("Enter numbers separated by spaces: ");
+        String[] tokens = input.nextLine().split(" ");
+        double[] numbers = new double[tokens.length];
+        for (int i = 0; i < tokens.length; i++) {
+            numbers[i] = Double.parseDouble(tokens[i]);
+        }
+        return numbers;
     }
 
     private static double calculateMean(double[] numbers) {

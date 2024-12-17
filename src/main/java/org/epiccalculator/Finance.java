@@ -4,6 +4,9 @@ import java.util.InputMismatchException;
 
 public class Finance extends Main {
 
+    public static void main(String[] args) {
+    }
+
     private static Scanner input = new Scanner(System.in);
 
     // User Financial Options Prompt
