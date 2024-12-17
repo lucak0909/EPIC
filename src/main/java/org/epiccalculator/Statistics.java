@@ -30,25 +30,25 @@ public class Statistics{
 
             switch (mode) {
                 case 1:
-                    calculateMean(numbers);
+                    System.out.println("Mean: " + calculateMean(numbers));
                     break;
                 case 2:
-                    calculateMedian(numbers);
+                    System.out.println("Median: " + calculateMedian(numbers));
                     break;
                 case 3:
                     calculateMode(numbers);
                     break;
                 case 4:
-                    calculateStandardDeviation(numbers);
+                    System.out.println("Standard Deviation: " + calculateStandardDeviation(numbers));
                     break;
                 case 5:
-                    calculateVariance(numbers);
+                    System.out.println("Variance: " + calculateVariance(numbers));
                     break;
                 case 6:
-                    calculateRange(numbers);
+                    System.out.println("Range: " + calculateRange(numbers));
                     break;
                 case 0:
-                    System.out.println("Exiting program...");
+                    System.out.println("Exiting the program...");
                     System.exit(0);
                     break;
                 default:
