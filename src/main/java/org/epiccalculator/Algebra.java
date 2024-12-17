@@ -36,11 +36,11 @@ public class Algebra extends Main {
         double criticalPoint = 0;
         if (determineShape(coefficients, generateRandomSamples(100, -1000, 1000)).equals("U")) {
             criticalPoint = Double.POSITIVE_INFINITY;
-        }
-        else if (determineShape(coefficients, generateRandomSamples(100, -1000, 1000)).equals("N")) {
+        } else if (determineShape(coefficients, generateRandomSamples(100, -1000, 1000)).equals("N")) {
             criticalPoint = Double.NEGATIVE_INFINITY;
+        } else {
+            throw new Exception("Could not determine shape of function.");
         }
-        else {throw new Exception("Could not determine shape of function.");}
 
         for (double x = start; x <= end; x += step) {
             double value = evaluatePolynomial(coefficients, x);
@@ -48,7 +48,9 @@ public class Algebra extends Main {
                 criticalPoint = value;
             }
         }
-        if (criticalPoint < 0.25 && criticalPoint > -0.25) {criticalPoint = 0;}
+        if (criticalPoint < 0.25 && criticalPoint > -0.25) {
+            criticalPoint = 0;
+        }
 
         return criticalPoint;
     }
@@ -57,9 +59,13 @@ public class Algebra extends Main {
         String type;
         coefficients = findNthDerivative(coefficients, 2);
 
-        if (evaluatePolynomial(coefficients, x) > 0) {type = "Minimum";}
-        else if (evaluatePolynomial(coefficients, x) < 0) {type = "Maximum";}
-        else {type = "Saddle Point";}
+        if (evaluatePolynomial(coefficients, x) > 0) {
+            type = "Minimum";
+        } else if (evaluatePolynomial(coefficients, x) < 0) {
+            type = "Maximum";
+        } else {
+            type = "Saddle Point";
+        }
 
         return type;
     }
@@ -159,9 +165,9 @@ public class Algebra extends Main {
         String Continue = input.next();
 
         while (!Continue.equalsIgnoreCase("Y") && !Continue.equalsIgnoreCase("N")) {
-        System.out.println("This is not a valid response. Please enter 'Y' or 'N'.");
-        System.out.println(">>> ");
-        Continue = input.next();
+            System.out.println("This is not a valid response. Please enter 'Y' or 'N'.");
+            System.out.println(">>> ");
+            Continue = input.next();
         }
 
         if (Continue.equalsIgnoreCase("Y")) {
@@ -240,8 +246,7 @@ public class Algebra extends Main {
                 }
             }
 
-        }
-        else if (Continue.equalsIgnoreCase("N")) {
+        } else if (Continue.equalsIgnoreCase("N")) {
             SelectMode();
         }
     }
