@@ -30,7 +30,7 @@ public class Main {
                 System.out.println(Basic.calculate(equation));
                 break;
             case 2:
-                // Algebra.SelectMode();
+                Algebra.main(null);
                 break;
             case 3:
                 Finance.calculateFinance();

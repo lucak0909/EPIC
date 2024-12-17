@@ -99,7 +99,7 @@ public class Algebra extends Main {
 
     public static double NewtonsMethod(int[] coefficients, double initialGuess) {
         double x = initialGuess;
-        double tolerance = 1e-7;
+        double tolerance = 0.05;
         int maxIterations = 1000;
         int iterations = 0;
 
@@ -122,7 +122,8 @@ public class Algebra extends Main {
             iterations++;
         }
 
-        throw new ArithmeticException("Newton's Method did not converge within the maximum number of iterations.");
+        throw new ArithmeticException("Newton's Method did not converge within the maximum number of iterations. " +
+                "Try a different initial guess.");
     }
 
     public static int[] inputPolynomial() {
@@ -146,11 +147,14 @@ public class Algebra extends Main {
 
     public static void main(String[] args) {
 
-        System.out.println("The algebra calculator can be used to:\n- Evaluate any polynomial at a given x" +
-                "\n - Find the shape of a Quadratic polynomial curve\n - Find the Critical Point of a polynomial within the domain of +- 1000" +
-                "\n - Find the first (or nth) derivative of a polynomial\n - Estimate the root(s) of a polynomial");
+        System.out.println("The algebra calculator can be used to:" +
+                "\n - Evaluate any polynomial at a given x" +
+                "\n - Find the shape of a Quadratic polynomial curve" +
+                "\n - Find the Critical Point of a polynomial within the domain of +- 1000" +
+                "\n - Find the first (or nth) derivative of a polynomial" +
+                "\n - Estimate the root(s) of a polynomial");
         System.out.println("Would you like to continue with the algebraic calculator? (Y/N)");
-        System.out.println(">>> ");
+        System.out.print(">>> ");
 
         String Continue = input.next();
 
@@ -159,109 +163,86 @@ public class Algebra extends Main {
         System.out.println(">>> ");
         Continue = input.next();
         }
-    }
+
         if (Continue.equalsIgnoreCase("Y")) {
-            System.out.println("Choose an option:");
-            System.out.println("1. Evaluate a Polynomial");
-            System.out.println("2. Find the Shape of a Quadratic Polynomial Curve");
-            System.out.println("3. Find the First (or nth) Derivative of a Polynomial");
-            System.out.println("4. Find Maxima/Minima of a Quadratic");
-            System.out.println("4. Estimate the Root(s) of a Polynomial");
-            System.out.println("5. All of the above");
-            System.out.println("6. Exit");
-            System.out.println(">>> ");
 
-            int mode = input.nextInt();
+            while (true) {
+                System.out.println("Choose an option:");
+                System.out.println("1. Evaluate a Polynomial");
+                System.out.println("2. Find the Shape of a Quadratic Polynomial Curve");
+                System.out.println("3. Find the First (or nth) Derivative of a Polynomial");
+                System.out.println("4. Find Maxima/Minima of a Quadratic Polynomial");
+                System.out.println("5. Estimate the Root(s) of a Polynomial");
+                System.out.println("6. Exit");
+                System.out.print(">>> ");
 
-            switch (mode) {
-                case 1:
-                    int[] coefficients1 = inputPolynomial();
-                    System.out.print("Enter a value for x: ");
-                    double x = input.nextDouble();
-                    double result = evaluatePolynomial(coefficients1, x);
-                    System.out.println("Result: " + x);
-                    break;
+                int mode = input.nextInt();
 
-                case 2:
-                    int[] coefficients2 = new int[3];
-                    System.out.println("Enter the coefficients starting from the constant term:");
-                    for (int i = 0; i <= 2; i++) {
-                        System.out.print("Coefficient of x^" + i + ": ");
-                        coefficients2[i] = input.nextInt();
-                    }
-                    System.out.println("Shape: " + determineShape(coefficients2, generateRandomSamples(100, -1000, 1000)));
-                    break;
+                switch (mode) {
+                    case 1:
+                        int[] coefficients1 = inputPolynomial();
+                        System.out.print("Enter a value for x: ");
+                        double x = input.nextDouble();
+                        double result = evaluatePolynomial(coefficients1, x);
+                        System.out.println("Result: " + result);
+                        break;
 
-                case 3:
-                    int[] coefficients3 = inputPolynomial();
-                    System.out.println("To what degree do you want to find the derivative: ");
-                    int degree = input.nextInt();
-                    int[] derivative = findNthDerivative(coefficients3, degree);
-                    System.out.print("Derivative (polynomial form): ");
-                    for (int i = derivative.length - 1; i >= 0; i--) {
-                        if (derivative[i] != 0) {
-                            System.out.print((derivative[i] > 0 && i != derivative.length - 1 ? "+" : "") + derivative[i] + (i > 0 ? "x^" + i : ""));
+                    case 2:
+                        int[] coefficients2 = new int[3];
+                        System.out.println("Enter the coefficients starting from the constant term:");
+                        for (int i = 0; i <= 2; i++) {
+                            System.out.print("Coefficient of x^" + i + ": ");
+                            coefficients2[i] = input.nextInt();
                         }
-                    }
-                    System.out.println();
+                        System.out.println("Shape: " + determineShape(coefficients2, generateRandomSamples(100, -1000, 1000)));
+                        break;
 
-                    break;
+                    case 3:
+                        int[] coefficients3 = inputPolynomial();
+                        System.out.println("To what degree do you want to find the derivative: ");
+                        int degree = input.nextInt();
+                        int[] derivative = findNthDerivative(coefficients3, degree);
+                        System.out.print("Derivative (polynomial form): ");
+                        for (int i = derivative.length - 1; i >= 0; i--) {
+                            if (derivative[i] != 0) {
+                                System.out.print((derivative[i] > 0 && i != derivative.length - 1 ? "+" : "") + derivative[i] + (i > 0 ? "x^" + i : ""));
+                            }
+                        }
+                        System.out.println();
+                        break;
 
+                    case 4:
+                        int[] coefficients4 = new int[3];
+                        System.out.println("Enter the coefficients starting from the constant term:");
+                        for (int i = 0; i <= 2; i++) {
+                            System.out.print("Coefficient of x^" + i + ": ");
+                            coefficients4[i] = input.nextInt();
+                        }
+                        double criticalPoint = 0;
+                        try {
+                            criticalPoint = findCriticalPoint(coefficients4, -100, 100, 0.1);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        System.out.println("Critical Point: " + criticalPoint + ", Type: " + findCriticalType(coefficients4, criticalPoint));
+                        break;
+
+                    case 5:
+                        int[] coefficients5 = inputPolynomial();
+                        System.out.println("Enter an initial guess for a root: ");
+                        double initialGuesses = input.nextDouble();
+                        double root = NewtonsMethod(coefficients5, initialGuesses);
+                        System.out.println("Estimated Root: " + root);
+                        break;
+
+                    case 6:
+                        java.lang.System.exit(0);
+                }
             }
 
         }
         else if (Continue.equalsIgnoreCase("N")) {
             SelectMode();
         }
-
-
-
     }
 }
-
-/*// Example coefficients for a polynomial: 2 + 3x + x^2
-        int[] coefficients = {2, 3, 1};
-
-        // Differentiate the polynomial
-        int[] derivative = differentiate(coefficients);
-        System.out.print("Derivative: ");
-        for (int coef : derivative) {
-            System.out.print(coef + " ");
-        }
-        System.out.println();
-
-        // Find the nth derivative (2nd derivative in this example)
-        int degree = 2;
-        int[] nthDerivative = findNthDerivative(coefficients, degree);
-        System.out.print(degree + "-th Derivative: ");
-        for (int coef : nthDerivative) {
-            System.out.print(coef + " ");
-        }
-        System.out.println();
-
-        // Evaluate the polynomial at x = 2
-        double x = 2;
-        double value = evaluatePolynomial(coefficients, x);
-        System.out.println("Polynomial evaluated at x = " + x + ": " + value);
-
-        // Find a critical point
-        try {
-            double criticalPoint = findCriticalPoint(coefficients, -10, 10, 0.1);
-            System.out.println("Critical Point: " + criticalPoint);
-
-            // Determine the type of critical point
-            String criticalType = findCriticalType(coefficients, criticalPoint);
-            System.out.println("Critical Point Type: " + criticalType);
-        } catch (Exception e) {
-            System.err.println("Error finding critical point: " + e.getMessage());
-        }
-
-        // Generate random samples and determine the shape of the curve
-        double[] samples = generateRandomSamples(10, -10, 10);
-        String shape = determineShape(coefficients, samples);
-        System.out.println("Shape of the curve: " + shape);
-
-        // Newton's Method placeholder
-        double initialGuess = 1;
-        double root = NewtonsMethod(coefficients, initialGuess);
-        System.out.println("Root found using Newton's Method: " + root); */
