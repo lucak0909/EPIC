@@ -39,7 +39,7 @@ public class Main {
                 Trigonometry.main(null);
                 break;
             case 5:
-                main(null);
+                Geometry.main(null);
                 break;
             case 6:
                 Statistics.calculateStatistics();
