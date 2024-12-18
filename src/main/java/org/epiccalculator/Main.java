@@ -20,7 +20,7 @@ public class Main {
 
         switch (mode) {
             case 1:
-                //Basic.calculate();
+                Basic.main(null);
                 break;
             case 2:
                 Algebra.main(null);
@@ -35,7 +35,7 @@ public class Main {
                 Geometry.main(null);
                 break;
             case 6:
-                Statistics.calculateStatistics();
+                //Statistics.calculateStatistics();
                 break;
             case 7:
                 Probability.CalculateProbability();
