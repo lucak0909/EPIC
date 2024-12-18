@@ -9,7 +9,7 @@ public class Finance extends Main {
         Finance.calculateFinance();
     }
 
-    private static Scanner input = new Scanner(System.in);
+    public static Scanner input = new Scanner(System.in);
 
     // User Financial Options Prompt
     private static void Options() {
@@ -65,7 +65,7 @@ abstract class FinanceCalculation {
     protected double getValidPositiveDouble(String prompt) {
         while (true) {
             try {
-                System.out.print(input);
+                System.out.print(prompt);
                 double value = input.nextDouble();
                 if (value > 0) {
                     return value;
@@ -84,30 +84,22 @@ abstract class FinanceCalculation {
 class SimpleInterest extends FinanceCalculation {
     @Override
     public void calculate() {
-        System.out.println("Enter Principal (P): ");
-        double principal = input.nextDouble();
-        System.out.println("Enter Annual Interest Rate (APR) (%):");
-        double rate = input.nextDouble();
-        System.out.println("Enter Time in Years (t):");
-        double time = input.nextDouble();
+        double principal = getValidPositiveDouble("Enter Principal (P): ");
+        double rate = getValidPositiveDouble("Enter Annual Interest Rate (APR) (%) (R): ");
+        double time = getValidPositiveDouble("Enter Time in years (T): ");
 
         double interest = (principal * rate * time) / 100;
         System.out.printf("Simple Interest: %.2f\n", interest);
-        System.out.printf("Total Amount: %.2f\n", (interest+principal));
     }
 }
 
 class CompoundInterest extends FinanceCalculation {
     @Override
     public void calculate() {
-        System.out.println("Enter Principal (P): ");
-        double principal = input.nextDouble();
-        System.out.println("Enter Annual Interest Rate (APR) (%):");
-        double rate = input.nextDouble();
-        System.out.println("Enter Number of Times Interest is Compounded per year (n): ");
-        int n = input.nextInt();
-        System.out.println("Enter Time in Years (t):");
-        double time = input.nextDouble();
+        double principal = getValidPositiveDouble("Enter Principal (P): ");
+        double rate = getValidPositiveDouble("Enter Annual Interest Rate (APR) (%) (R): ");
+        int n = (int) getValidPositiveDouble("Enter Number of Times Interest is Compounded per year (n): ");
+        double time = getValidPositiveDouble("Enter Time in years (T): ");
 
         double amount = principal * Math.pow(1 + (rate / 100) / n, n * time);
         System.out.printf("Compound Interest: %.2f\n", amount - principal);
@@ -118,12 +110,9 @@ class CompoundInterest extends FinanceCalculation {
 class LoanCalculation extends FinanceCalculation {
     @Override
     public void calculate() {
-        System.out.println("Enter Loan Amount:");
-        double loanAmount = input.nextDouble();
-        System.out.println("Enter Annual Interest Rate (%): ");
-        double annualRate = input.nextDouble();
-        System.out.println("Enter Loan Term in Months:");
-        int months = input.nextInt();
+        double loanAmount = getValidPositiveDouble("Enter Loan Amount: ");
+        double annualRate = getValidPositiveDouble("Enter Annual Interest Rate (%) (R): ");
+        int months = (int) getValidPositiveDouble("Enter Loan Term in Months: ");
 
         annualRate = annualRate / 100 / 12;
 
@@ -137,10 +126,8 @@ class LoanCalculation extends FinanceCalculation {
 class CurrencyConverter extends FinanceCalculation {
     @Override
     public void calculate() {
-        System.out.println("Enter amount in current currency:");
-        double usd = input.nextDouble();
-        System.out.println("Enter current exchange rate to EUR:");
-        double conversionRate = input.nextDouble();
+        double usd = getValidPositiveDouble("Enter Amount in USD ($): ");
+        double conversionRate = getValidPositiveDouble("Enter Conversion Rate to EUR (€): ");
 
         double eur = usd * conversionRate;
         System.out.printf("Equivalent Amount in EUR: %.2f\n", eur);
@@ -150,10 +137,8 @@ class CurrencyConverter extends FinanceCalculation {
 class TaxCalculation extends FinanceCalculation {
     @Override
     public void calculate() {
-        System.out.println("Enter Total Income:");
-        double income = input.nextDouble();
-        System.out.println("Enter Tax Rate (%):");
-        double taxRate = input.nextDouble();
+        double income = getValidPositiveDouble("Enter Total Income: ");
+        double taxRate = getValidPositiveDouble("Enter Tax Rate (%) (R): ");
 
         double tax = (income * taxRate) / 100;
         System.out.printf("Tax Amount: %.2f\n", tax);
@@ -164,12 +149,9 @@ class TaxCalculation extends FinanceCalculation {
 class BreakEvenAnalysis extends FinanceCalculation {
     @Override
     public void calculate() {
-        System.out.println("Enter Fixed Costs: ");
-        double fixedCosts = input.nextDouble();
-        System.out.println("Enter Variable Costs per Unit: ");
-        double variableCosts = input.nextDouble();
-        System.out.println("Enter Price per Unit: ");
-        double pricePerUnit = input.nextDouble();
+        double fixedCosts = getValidPositiveDouble("Enter Fixed Costs: ");
+        double variableCosts = getValidPositiveDouble("Enter Variable Costs per Unit: ");
+        double pricePerUnit = getValidPositiveDouble("Enter Price per Unit: ");
 
         if (pricePerUnit <= variableCosts) {
             throw new IllegalArgumentException("Error: Price per Unit must be greater than variable costs.");

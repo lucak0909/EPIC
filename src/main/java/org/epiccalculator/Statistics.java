@@ -4,68 +4,91 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Statistics{
+public class Statistics {
 
-    public static void main(String[] args){
-        Statistics.calculateStatistics();
+    public static void main(String[] args) {
+        try{
+            Statistics.calculateStatistics();
+        } catch (Exception e) {
+            System.out.println("An unexpected error occured: "+ e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private static Scanner input = new Scanner(System.in);
+    public static Scanner input = new Scanner(System.in);
 
     public static void calculateStatistics() {
-        double[] numbers = getNumbers(input);
-        while (true) {
-            System.out.println("Select from the following options: ");
-            System.out.println("1 --> Mean");
-            System.out.println("2 --> Median");
-            System.out.println("3 --> Mode");
-            System.out.println("4 --> Standard Deviation");
-            System.out.println("5 --> Variance");
-            System.out.println("6 --> Range");
-            System.out.println("0 --> Exit...");
-            System.out.println(">>> ");
+        double[] numbers = null;
+        while (numbers == null) {
+            numbers = getNumbers(input);
+        }
+        while (true){
+            try{
+                System.out.println("Select from the following options: ");
+                System.out.println("1 --> Mean");
+                System.out.println("2 --> Median");
+                System.out.println("3 --> Mode");
+                System.out.println("4 --> Standard Deviation");
+                System.out.println("5 --> Variance");
+                System.out.println("6 --> Range");
+                System.out.println("0 --> Exit...");
+                System.out.println(">>> ");
 
-            int mode = input.nextInt();
-            input.nextLine();
+                int mode = Integer.parseInt(input.nextLine().trim());
 
-            switch (mode) {
-                case 1:
-                    System.out.println("Mean: " + calculateMean(numbers));
-                    break;
-                case 2:
-                    System.out.println("Median: " + calculateMedian(numbers));
-                    break;
-                case 3:
-                    calculateMode(numbers);
-                    break;
-                case 4:
-                    System.out.println("Standard Deviation: " + calculateStandardDeviation(numbers));
-                    break;
-                case 5:
-                    System.out.println("Variance: " + calculateVariance(numbers));
-                    break;
-                case 6:
-                    System.out.println("Range: " + calculateRange(numbers));
-                    break;
-                case 0:
-                    System.out.println("Exiting the program...");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
-                    break;
+                switch (mode) {
+                    case 1:
+                        System.out.println("Mean: " + calculateMean(numbers));
+                        break;
+                    case 2:
+                        System.out.println("Median: " + calculateMedian(numbers));
+                        break;
+                    case 3:
+                        calculateMode(numbers);
+                        break;
+                    case 4:
+                        System.out.println("Standard Deviation: " + calculateStandardDeviation(numbers));
+                        break;
+                    case 5:
+                        System.out.println("Variance: " + calculateVariance(numbers));
+                        break;
+                    case 6:
+                        System.out.println("Range: " + calculateRange(numbers));
+                        break;
+                    case 0:
+                        System.out.println("Exiting the program...");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid option.");
+                        break;
+                }
+            } catch(NumberFormatException e){
+                System.out.println("Invalid input. Please enter a valid option between 0 and 6.");
             }
         }
     }
 
+
     private static double[] getNumbers(Scanner input) {
-        System.out.println("Enter numbers separated by spaces: ");
-        String[] tokens = input.nextLine().split(" ");
-        double[] numbers = new double[tokens.length];
-        for (int i = 0; i < tokens.length; i++) {
-            numbers[i] = Double.parseDouble(tokens[i]);
+        while(true) {
+            System.out.println("Enter numbers separated by spaces:");
+            String line = input.nextLine().trim();
+            if (line.isEmpty()) {
+                System.out.println("No input provided. PLease at least one number");
+                continue;
+            }
+            String[] tokens = line.split("\\s+");
+            double[] numbers = new double[tokens.length];
+            try {
+                for (int i = 0; i < tokens.length; i++) {
+                    numbers[i] = Double.parseDouble(tokens[i]);
+                }
+                return numbers;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter only numbers separated by spaces.");
+            }
         }
-        return numbers;
     }
 
     private static double calculateMean(double[] numbers) {
