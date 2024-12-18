@@ -20,7 +20,7 @@ public class NumberSystems extends Main {
 
         // Determine Variables to be used
         int mode;
-        double number;
+        int number;
         int newMode;
         String result = "";
 
@@ -35,12 +35,12 @@ public class NumberSystems extends Main {
         }
 
         System.out.println("Enter number: ");
-        number = input.nextDouble();
+        number = input.nextInt();
 
         while (!Validate.isNumeric(String.valueOf(number))) {
             System.out.println("Invalid -> Try again\n");
             System.out.println("Enter number:");
-            number = input.nextDouble();
+            number = input.nextInt();
         }
 
         options();
@@ -51,7 +51,7 @@ public class NumberSystems extends Main {
             options();
             newMode = input.nextInt();
         }
-
+        // create object of NumberSystemConversion (conversion)
         NumberSystemConversion conversion = switch (mode) {
             case 1 -> new DecimalConversion();
             case 2 -> new BinaryConversion();
@@ -72,17 +72,17 @@ public class NumberSystems extends Main {
 }
 
 interface NumberSystemConversion {
-    String convert(double number, int newMode);
+    String convert(int number, int newMode);
 }
 
 class DecimalConversion implements NumberSystemConversion {
     @Override
-    public String convert(double number, int newMode) {
+    public String convert(int number, int newMode) {
         return switch (newMode) {
             case 1 -> String.valueOf(number);
-            case 2 -> Integer.toBinaryString((int) number);
-            case 3 -> Integer.toHexString((int) number);
-            case 4 -> Integer.toOctalString((int) number);
+            case 2 -> Integer.toBinaryString(number);
+            case 3 -> Integer.toHexString(number);
+            case 4 -> Integer.toOctalString(number);
             default -> "";
         };
     }
@@ -90,11 +90,11 @@ class DecimalConversion implements NumberSystemConversion {
 
 class BinaryConversion implements NumberSystemConversion {
     @Override
-    public String convert(double number, int newMode) {
-        int binary = Integer.parseInt(String.valueOf((int) number), 2);
+    public String convert(int number, int newMode) {
+        int binary = Integer.parseInt(String.valueOf(number), 2); // Parses the string representation of the binary number and converts it to decimal
         return switch (newMode) {
             case 1 -> String.valueOf(binary);
-            case 2 -> String.valueOf((int) number);
+            case 2 -> String.valueOf(number);
             case 3 -> Integer.toHexString(binary);
             case 4 -> Integer.toOctalString(binary);
             default -> "";
@@ -104,12 +104,12 @@ class BinaryConversion implements NumberSystemConversion {
 
 class HexadecimalConversion implements NumberSystemConversion {
     @Override
-    public String convert(double number, int newMode) {
-        int hex = Integer.parseInt(String.valueOf((int) number), 16);
+    public String convert(int number, int newMode) {
+        int hex = Integer.parseInt(String.valueOf(number), 16); // Parses the string representation of the hex number and converts it to decimal
         return switch (newMode) {
             case 1 -> String.valueOf(hex);
             case 2 -> Integer.toBinaryString(hex);
-            case 3 -> String.valueOf((int) number);
+            case 3 -> String.valueOf(number);
             case 4 -> Integer.toOctalString(hex);
             default -> "";
         };
@@ -118,13 +118,13 @@ class HexadecimalConversion implements NumberSystemConversion {
 
 class OctalConversion implements NumberSystemConversion {
     @Override
-    public String convert(double number, int newMode) {
-        int octal = Integer.parseInt(String.valueOf((int) number), 8);
+    public String convert(int number, int newMode) {
+        int octal = Integer.parseInt(String.valueOf(number), 8); // Parses the string representation of octal and converts it to decimal
         return switch (newMode) {
             case 1 -> String.valueOf(octal);
             case 2 -> Integer.toBinaryString(octal);
             case 3 -> Integer.toHexString(octal);
-            case 4 -> String.valueOf((int) number);
+            case 4 -> String.valueOf(number);
             default -> "";
         };
     }

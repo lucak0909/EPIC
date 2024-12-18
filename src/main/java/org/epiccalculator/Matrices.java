@@ -176,7 +176,7 @@ class MatricesAddition implements MatrixCalculation {
     public void calculate() {
         ArrayList<int[][]> matrices = Matrices.createMatrices(2);
         if (Matrices.sameDimensions(matrices)) {
-            int[][] matrix1 = matrices.get(0);
+            int[][] matrix1 = matrices.getFirst();
             int[][] matrix2 = matrices.get(1);
 
             int rows = matrix1.length;

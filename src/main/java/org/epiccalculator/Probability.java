@@ -52,8 +52,8 @@ interface ProbabilityCalculation {
     void calculate();
 
     // method for combinations + permutations
-    static long factorial(int num) {
-        long result = 1;
+    static int factorial(int num) {
+        int result = 1;
         for (int i = 1; i <= num; i++) {
             result *= i;
         }
@@ -77,7 +77,7 @@ class BasicProbability implements ProbabilityCalculation {
             totalOutcomes = input.nextInt();
         }
 
-        double probability = (double) favorableOutcomes / totalOutcomes;
+        int probability =  favorableOutcomes / totalOutcomes;
         System.out.printf("The probability is: %.2f%%\n", probability * 100);
     }
 }
@@ -103,11 +103,11 @@ class Permutations implements ProbabilityCalculation {
             r = input.nextInt();
         }
 
-        long permutations = calculatePermutations(n, r);
+        int permutations = calculatePermutations(n, r);
         System.out.println("Number of possible permutations: " + permutations);
     }
 
-    private static long calculatePermutations(int n, int r) {
+    private static int calculatePermutations(int n, int r) {
         return ProbabilityCalculation.factorial(n) / ProbabilityCalculation.factorial(n - r);
     }
 }
