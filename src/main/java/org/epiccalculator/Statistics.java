@@ -15,7 +15,7 @@ public class Statistics {
         }
     }
 
-    private static Scanner input = new Scanner(System.in);
+    public static Scanner input = new Scanner(System.in);
 
     public static void calculateStatistics() {
         double[] numbers = null;
@@ -72,7 +72,7 @@ public class Statistics {
 
     private static double[] getNumbers(Scanner input) {
         while(true) {
-            System.out.println("Enter numbers sepaarted by spaces:");
+            System.out.println("Enter numbers separated by spaces:");
             String line = input.nextLine().trim();
             if (line.isEmpty()) {
                 System.out.println("No input provided. PLease at least one number");

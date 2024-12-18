@@ -9,7 +9,7 @@ public class Finance extends Main {
         Finance.calculateFinance();
     }
 
-    private static Scanner input = new Scanner(System.in);
+    public static Scanner input = new Scanner(System.in);
 
     // User Financial Options Prompt
     private static void Options() {
