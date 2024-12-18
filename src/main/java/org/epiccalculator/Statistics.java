@@ -132,7 +132,7 @@ public class Statistics{
         for (double num : numbers) {
             sumSquaredDiffs += Math.pow(num - mean, 2);
         }
-        return sumSquaredDiffs / numbers.length;
+        return sumSquaredDiffs / (numbers.length - 1);
     }
 
     private static double calculateRange(double[] numbers){
