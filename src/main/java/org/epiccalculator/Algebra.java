@@ -155,7 +155,7 @@ public class Algebra extends Main {
     }
 
     public static void plotGraph(int[] coefficients) {
-        double[] xData = new double[1000]; // large range for ease of use
+        double[] xData = new double[1000]; // large range to work for polys with a large constant term
         double[] yData = new double[1000];
         for (int i = 0; i < xData.length; i++) {
             xData[i] = i - 500; // Example x values from -500 to 499
@@ -174,7 +174,7 @@ public class Algebra extends Main {
                 "\n - Find the Critical Point of a polynomial within the domain of +- 1000" +
                 "\n - Find the first (or nth) derivative of a polynomial" +
                 "\n - Estimate the root(s) of a polynomial" +
-                "\n - Polt the graph of a polynomial");
+                "\n - Plot the graph of a polynomial");
         System.out.println("Would you like to continue with the algebraic calculator? (Y/N)");
         System.out.print(">>> ");
 

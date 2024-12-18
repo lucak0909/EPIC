@@ -54,13 +54,7 @@ public class Main {
 
     public static class Validate {
 
-        private static boolean isValidEquation(String equation) {
-            // Remove spaces and check if it matches the pattern of a simple equation
-            equation = equation.replaceAll("\\s+", "");
-            return equation.matches("\\d+[+\\-*/%]\\d+");
-        }
-
-
+        // checks if number is numeric and returns true if so
         public static boolean isNumeric(String str) {
             try {
                 Double.parseDouble(str);
@@ -70,13 +64,6 @@ public class Main {
             }
         }
 
-        public static boolean isAlpha(String str) {
-            return str.matches("[a-zA-Z]+");
-        }
-
-        public static boolean isAlphanumeric(String str) {
-            return str.matches("[a-zA-Z0-9]+");
-        }
     }
 
     public static void main(String[] args) {

@@ -1,56 +1,71 @@
 package org.epiccalculator;
 
+// Interface representing a 2D shape
 interface Shape2D {
-    double Pi = 3.14159265359;
+    double Pi = 3.14159265359;  // Constant value for Pi
 
+    // Method to calculate the perimeter of the shape
     double calculatePerimeter();
 
+    // Method to calculate the area of the shape
     double calculateArea();
 }
 
+// Interface representing a 3D shape
 interface Shape3D {
     double Pi = 3.14159265359;
 
+    // Method to calculate the volume of the shape
     double calculateVolume();
 
+    // Method to calculate the surface area of the shape
     double calculateSurfaceArea();
 }
 
+// Class representing a Rectangle, implements Shape2D
 class Rectangle implements Shape2D {
     double length;
     double width;
 
+    // Constructor to initialize length and width
     public Rectangle(double length, double width) {
         this.length = length;
         this.width = width;
     }
 
+    // Calculate perimeter of the rectangle
     @Override
     public double calculatePerimeter() {
         return 2 * (length + width);
     }
 
+    // Calculate area of the rectangle
     @Override
     public double calculateArea() {
         return length * width;
     }
 }
 
+// Class representing a Square, extends Rectangle
 class Square extends Rectangle {
+    // Constructor to initialize the side of the square
     public Square(double side) {
         super(side, side);
     }
 
+    // Inherit perimeter calculation from Rectangle
     @Override
     public double calculatePerimeter() {
         return super.calculatePerimeter();
     }
 
+    // Inherit area calculation from Rectangle
     @Override
     public double calculateArea() {
         return super.calculateArea();
     }
 }
+
 
 class Triangle implements Shape2D {
     double a;

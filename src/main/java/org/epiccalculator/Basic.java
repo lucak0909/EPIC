@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Basic extends Main{
+
     public static void main(String[] args) {
 
         System.out.println("Enter a mathematical expression:");
@@ -70,6 +71,7 @@ public class Basic extends Main{
             parts.remove(operatorIndex); // Remove right operand
         }
 
+        // only returns the numeric value of the string
         return Double.parseDouble(parts.get(0));
     }
 

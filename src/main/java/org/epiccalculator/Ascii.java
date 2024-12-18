@@ -15,11 +15,7 @@ public class Ascii {
                 "\\/    \\/\\__,_|\\__,_|\\___| |_.__/ \\__, | \\__/\\__|\\__,_|\\__,_|\\___|_| |_|\\__|___/ |_|  \\___/|_|    \\__/\\__|\\__,_|\\__,_|\\___|_| |_|\\__|___/\n" +
                 "                                 |___/                                                                                                  \n" +
                 "                                                                                                                                        \n" +
-                "                                                                                                                                        \n" +
-                "                                                                                                                                        \n" +
-                "                                                                                                                                        \n" +
-                "                                                                                                                                        \n" +
-                "                                                                                                                                        ");
+                "                                                                                                                                        \n");
         System.out.println("Creators: \nLuca Knierim, Oran Dennehy, Mahdi Mirzay, Aaron O'Doherty");
     }
 }
