@@ -12,6 +12,7 @@ public class Matrices extends Main {
         System.out.println("3 --> Multiply matrices");
         System.out.println("4 --> LU Factorisation");
         System.out.println("5 --> Power a Matrix");
+        System.out.println("6 --> Eigenvalues and Eigenvectors (2x2 Matrix only)");
         System.out.print(">>> ");
     }
 
@@ -152,6 +153,7 @@ public class Matrices extends Main {
             case 3 -> new MatricesMultiplication();
             case 4 -> new LUFactorisation();
             case 5 -> new PowerMatrix();
+            case 6 -> new Eigenvalues();
             default -> null;
         };
 
@@ -342,6 +344,118 @@ class PowerMatrix implements MatrixCalculation {
         }
         else {
             System.out.println("One matrix is required for power calculation.");
+        }
+    }
+}
+class Eigenvalues implements MatrixCalculation {
+    @Override
+    public void calculate() {
+        ArrayList<int[][]> matrices = Matrices.createMatrices(1);
+        if (matrices.size() == 1) {
+            int[][] matrix = matrices.get(0);
+            if (Matrices.isSquare(matrix)) {
+                if (matrix.length == 2) {
+                    double lambda1 = (((matrix[0][0] + matrix [1][1])+(Math.sqrt(Math.pow((matrix[0][0] + matrix [1][1]), 2) - 4*(matrix[0][0]*matrix[1][1] - matrix[0][1] * matrix[1][0]))))/2);
+                    double lambda2 = (((matrix[0][0] + matrix [1][1])-(Math.sqrt(Math.pow((matrix[0][0] + matrix [1][1]), 2) - 4*(matrix[0][0]*matrix[1][1] - matrix[0][1] * matrix[1][0]))))/2);
+
+                    System.out.printf("Eigenvalues: λ1 = %.4f, λ2 = %.4f\n\n", lambda1,lambda2);
+
+                    //displaying first matrix taking lambda1
+                    int[][] eigenvalue1 = new int[2][2];
+                    for (int r = 0; r < 2; r++) {
+                        for (int c = 0; c < 2; c++) {
+                            if (r == c) {
+                                eigenvalue1[r][c] = (int) (matrix[r][c] - lambda1);
+                            }
+                            else {
+                                eigenvalue1[r][c] = matrix[r][c];
+                            }
+                        }
+                    }
+
+                    System.out.println("λ1 matrix: ");
+                    Matrices.printMatrix(eigenvalue1);
+
+                    //displaying second matrix taking lambda2
+                    int[][] eigenvalue2 = new int[2][2];
+                    for (int r = 0; r < 2; r++) {
+                        for (int c = 0; c < 2; c++) {
+                            if (r == c) {
+                                eigenvalue2[r][c] = (int) (matrix[r][c] - lambda2);
+                            }
+                            else {
+                                eigenvalue2[r][c] = matrix[r][c];
+                            }
+                        }
+                    }
+
+                    System.out.println("λ2 matrix: ");
+                    Matrices.printMatrix(eigenvalue2);
+
+                    //eigenvector(s) from lambda1
+                    double x1 = 1;
+                    double y1 = -((matrix[0][0]-lambda1) / matrix[0][1]);
+                    double xCoef = -(matrix[0][0]-lambda1);
+                    double yCoef = matrix[0][1];
+                    //simplifying ratios if possible
+                    if(xCoef % yCoef == 0) {
+                        xCoef = xCoef/yCoef;
+                        yCoef = 1;
+                    }
+                    else if(yCoef % xCoef == 0) {
+                        yCoef =  yCoef/xCoef;
+                        xCoef = 1;
+                    }
+                    System.out.printf("First Eigenvector pair: %n%.2fv1 = %.2fv2%n%n",xCoef, yCoef );
+                    System.out.printf("Sample Eigenvector: %n[%.4f] %n[%.4f]%n%n",x1, y1);
+                    if (((matrix[0][0]-lambda1)/matrix[0][1]) != matrix[1][0]/(matrix[1][1]-lambda1)) {
+                        System.out.printf("Second Eigenvector pair: %n%.2fv1 = %.2fv2%n%n",matrix[1][0], (matrix[1][1]-lambda1));
+                        System.out.printf("Sample Eigenvector: %n[%.4f] %n[%.4f]%n%n",1, -(matrix[1][0]) / (matrix[1][1]-lambda1));
+                    }
+
+                    //eigenvector from lambda2 (if needed)
+                    if (((matrix[0][0]-lambda2)/matrix[0][1]) != matrix[1][0]/(matrix[1][1]-lambda1) &&
+                            ((matrix[0][0]-lambda2)/matrix[0][1]) != (matrix[0][0]-lambda1)/matrix[0][1]) {
+                        double x2 = 1;
+                        double y2 = -((matrix[0][0] - lambda2) / matrix[0][1]);
+                        double x2Coef = -(matrix[0][0] - lambda2);
+                        double y2Coef = matrix[0][1];
+                        //simplifying ratios if possible
+                        if(x2Coef % y2Coef == 0) {
+                            x2Coef = x2Coef/y2Coef;
+                            y2Coef = 1;
+                        }
+                        else if(y2Coef % x2Coef == 0) {
+                            y2Coef =  y2Coef/x2Coef;
+                            x2Coef = 1;
+                        }
+                        System.out.printf("Second Eigenvector pair: %n%.2fv1 = %.2fv2%n%n", x2Coef, y2Coef);
+                        System.out.printf("Sample Eigenvector: %n[%.4f] %n[%.4f]", x2, y2);
+                    }
+                    if ((matrix[1][0]/(matrix[1][1]-lambda2)) != matrix[1][0]/(matrix[1][1]-lambda1) &&
+                            ((matrix[0][0]-lambda2)/matrix[0][1]) != (matrix[0][0]-lambda1)/matrix[0][1] &&
+                            (matrix[1][0]/(matrix[1][1]-lambda2)) != ((matrix[0][0]-lambda2)/matrix[0][1])) {
+                        double x2 = 1;
+                        double y2 = -((matrix[0][0] - lambda2) / matrix[0][1]);
+                        double x2Coef = -(matrix[0][0] - lambda2);
+                        double y2Coef = matrix[0][1];
+                        //simplifying ratios if possible
+                        if(x2Coef % y2Coef == 0) {
+                            x2Coef = x2Coef/y2Coef;
+                            y2Coef = 1;
+                        }
+                        else if(y2Coef % x2Coef == 0) {
+                            y2Coef =  y2Coef/x2Coef;
+                            x2Coef = 1;
+                        }
+                        System.out.printf("Second Eigenvector pair: %n%.2fv1 = %.2fv2%n%n", x2Coef, y2Coef);
+                        System.out.printf("Sample Eigenvector: %n[%.4f] %n[%.4f]", x2, y2);
+                    }
+                }
+                else {
+                    System.out.println("Not possible to get Eigenvalue for a Matrix of this size.");
+                }
+            }
         }
     }
 }
