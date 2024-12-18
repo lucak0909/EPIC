@@ -10,11 +10,8 @@ public class Matrices extends Main {
         System.out.println("1 --> Add matrices");
         System.out.println("2 --> Subtract matrices");
         System.out.println("3 --> Multiply matrices");
-        System.out.println("4 --> Inverse a matrix");
-        System.out.println("5 --> Eigenvalues and Eigenvectors");
-        System.out.println("6 --> LU Factorisation");
+        System.out.println("4 --> LU Factorisation");
         System.out.print(">>> ");
-
     }
 
     protected static ArrayList<int[][]> createMatrices() {
@@ -22,12 +19,12 @@ public class Matrices extends Main {
         ArrayList<int[][]> matrices = new ArrayList<>();
 
         System.out.println("Enter the number of matrices you want to create (Max 2): ");
-        System.out.println("For eigenvalues, eigenvectors and LU Factorisation, enter 1 matrix.");
+        System.out.println("For LU Factorisation, enter 1 matrix.");
         System.out.print(">>>");
         int matricesCount = input.nextInt();
 
-        while (matricesCount <= 0 || matricesCount > 2) {
-            System.out.println("Invalid. Please enter a number between 1 and 2: ");
+        while (!Main.Validate.isNumeric(String.valueOf(matricesCount)) || matricesCount > 2 || matricesCount < 1) {
+            System.out.println("Invalid");
             matricesCount = input.nextInt();
         }
 
@@ -50,67 +47,71 @@ public class Matrices extends Main {
         System.out.println(matricesCount + " matrices have been created.");
         System.out.println("The matrices are: ");
         for (int[][] matrix : matrices) {
-            int rows = matrix.length;
-            int cols = matrix[0].length;
-            int maxLength = 0;
-
-            // Find the maximum length of the elements in the matrix
-            for (int[] row : matrix) {
-                for (int element : row) {
-                    maxLength = Math.max(maxLength, String.valueOf(element).length());
-                }
-            }
-
-            // Top border
-            System.out.print("┌");
-            for (int c = 0; c < cols; c++) {
-                for (int i = 0; i < maxLength + 2; i++) {
-                    System.out.print("─");
-                }
-                if (c < cols - 1) {
-                    System.out.print("┬");
-                }
-            }
-            System.out.println("┐");
-
-            // Matrix rows
-            for (int r = 0; r < rows; r++) {
-                System.out.print("│");
-                for (int c = 0; c < cols; c++) {
-                    System.out.printf(" %-" + maxLength + "d │", matrix[r][c]);
-                }
-                System.out.println();
-
-                // Row separator
-                if (r < rows - 1) {
-                    System.out.print("├");
-                    for (int c = 0; c < cols; c++) {
-                        for (int i = 0; i < maxLength + 2; i++) {
-                            System.out.print("─");
-                        }
-                        if (c < cols - 1) {
-                            System.out.print("┼");
-                        }
-                    }
-                    System.out.println("┤");
-                }
-            }
-
-            // Bottom border
-            System.out.print("└");
-            for (int c = 0; c < cols; c++) {
-                for (int i = 0; i < maxLength + 2; i++) {
-                    System.out.print("─");
-                }
-                if (c < cols - 1) {
-                    System.out.print("┴");
-                }
-            }
-            System.out.println("┘");
-            System.out.println();
+            printMatrix(matrix);
         }
 
         return matrices;
+    }
+
+    protected static void printMatrix(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int maxLength = 0;
+
+        // Find the maximum length of the elements in the matrix
+        for (int[] row : matrix) {
+            for (int element : row) {
+                maxLength = Math.max(maxLength, String.valueOf(element).length());
+            }
+        }
+
+        // Top border
+        System.out.print("┌");
+        for (int c = 0; c < cols; c++) {
+            for (int i = 0; i < maxLength + 2; i++) {
+                System.out.print("─");
+            }
+            if (c < cols - 1) {
+                System.out.print("┬");
+            }
+        }
+        System.out.println("┐");
+
+        // Matrix rows
+        for (int r = 0; r < rows; r++) {
+            System.out.print("│");
+            for (int c = 0; c < cols; c++) {
+                System.out.printf(" %-" + maxLength + "d │", matrix[r][c]);
+            }
+            System.out.println();
+
+            // Row separator
+            if (r < rows - 1) {
+                System.out.print("├");
+                for (int c = 0; c < cols; c++) {
+                    for (int i = 0; i < maxLength + 2; i++) {
+                        System.out.print("─");
+                    }
+                    if (c < cols - 1) {
+                        System.out.print("┼");
+                    }
+                }
+                System.out.println("┤");
+            }
+        }
+
+        // Bottom border
+        System.out.print("└");
+        for (int c = 0; c < cols; c++) {
+            for (int i = 0; i < maxLength + 2; i++) {
+                System.out.print("─");
+            }
+            if (c < cols - 1) {
+                System.out.print("┴");
+            }
+        }
+        System.out.println("┘");
+        System.out.println();
     }
 
     protected static boolean sameDimensions(ArrayList<int[][]> matrices) {
@@ -137,6 +138,9 @@ public class Matrices extends Main {
         return cols1 == rows2;
     }
 
+    protected static boolean isSquare(int[][] matrix) {
+        return matrix.length == matrix[0].length;
+    }
 
     public static void CalculateMatrix() {
         Scanner input = new Scanner(System.in);
@@ -155,8 +159,7 @@ public class Matrices extends Main {
             case 1 -> new MatricesAddition();
             case 2 -> new MatricesSubtraction();
             case 3 -> new MatricesMultiplication();
-            case 4 -> new EigenValuesAndVectors();
-            case 5 -> new LUFactorisation();
+            case 4 -> new LUFactorisation();
             default -> null;
         };
 
@@ -177,9 +180,23 @@ interface MatrixCalculation {
 class MatricesAddition implements MatrixCalculation {
     @Override
     public void calculate() {
-        if (Matrices.sameDimensions(Matrices.createMatrices())) {
-            // Add matrices
+        ArrayList<int[][]> matrices = Matrices.createMatrices();
+        if (Matrices.sameDimensions(matrices)) {
+            int[][] matrix1 = matrices.get(0);
+            int[][] matrix2 = matrices.get(1);
 
+            int rows = matrix1.length;
+            int cols = matrix1[0].length;
+
+            int[][] result = new int[rows][cols];
+            for (int r = 0; r < rows; r++) {
+                for (int c = 0; c < cols; c++) {
+                    result[r][c] = matrix1[r][c] + matrix2[r][c];
+                }
+            }
+
+            System.out.println("The sum of the matrices is: ");
+            Matrices.printMatrix(result);
         } else {
             System.out.println("Matrices must have the same dimensions.");
         }
@@ -189,9 +206,23 @@ class MatricesAddition implements MatrixCalculation {
 class MatricesSubtraction implements MatrixCalculation {
     @Override
     public void calculate() {
-        if (Matrices.sameDimensions(Matrices.createMatrices())) {
-            // Subtraction
+        ArrayList<int[][]> matrices = Matrices.createMatrices();
+        if (Matrices.sameDimensions(matrices)) {
+            int[][] matrix1 = matrices.get(0);
+            int[][] matrix2 = matrices.get(1);
 
+            int rows = matrix1.length;
+            int cols = matrix1[0].length;
+
+            int[][] result = new int[rows][cols];
+            for (int r = 0; r < rows; r++) {
+                for (int c = 0; c < cols; c++) {
+                    result[r][c] = matrix1[r][c] - matrix2[r][c];
+                }
+            }
+
+            System.out.println("The difference of the matrices is: ");
+            Matrices.printMatrix(result);
         } else {
             System.out.println("Matrices must have the same dimensions.");
         }
@@ -201,23 +232,85 @@ class MatricesSubtraction implements MatrixCalculation {
 class MatricesMultiplication implements MatrixCalculation {
     @Override
     public void calculate() {
-        if (Matrices.m1ColumnsEqualM2Rows(Matrices.createMatrices())) {
-            // Multiplication
-        } else {
+        ArrayList<int[][]> matrices = Matrices.createMatrices();
+        if (Matrices.m1ColumnsEqualM2Rows(matrices)) {
+            int[][] matrix1 = matrices.get(0);
+            int[][] matrix2 = matrices.get(1);
+
+            int rows1 = matrix1.length;
+            int cols1 = matrix1[0].length;
+            int cols2 = matrix2[0].length;
+
+            int[][] result = new int[rows1][cols2];
+            for (int r = 0; r < rows1; r++) {
+                for (int c = 0; c < cols2; c++) {
+                    for (int i = 0; i < cols1; i++) {
+                        result[r][c] += matrix1[r][i] * matrix2[i][c];
+                    }
+                }
+            }
+
+            System.out.println("The product of the matrices is: ");
+            Matrices.printMatrix(result);
+        }
+
+        else {
             System.out.println("Matrix 1 columns must equal Matrix 2 rows for multiplication.");
         }
     }
 }
 
-class EigenValuesAndVectors implements MatrixCalculation {
-    @Override
-    public void calculate() {
-    }
-}
 
 class LUFactorisation implements MatrixCalculation {
     @Override
     public void calculate() {
+        ArrayList<int[][]> matrices = Matrices.createMatrices();
+        if (matrices.size() == 1) {
+            int[][] matrix = matrices.get(0);
+            if (Matrices.isSquare(matrix)) {
+                //LU Factorisation
+                int n = matrix.length;
+                int[][] L = new int[n][n];
+                int[][] U = new int[n][n];
 
-    }
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < n; j++) {
+                        if (j < i) {
+                            L[j][i] = 0;
+                        } else {
+                            L[j][i] = matrix[j][i];
+                            for (int k = 0; k < i; k++) {
+                                L[j][i] -= L[j][k] * U[k][i];
+                            }
+                        }
+                    }
+
+                    for (int j = 0; j < n; j++) {
+                        if (j < i) {
+                            U[i][j] = 0;
+                        } else if (j == i) {
+                            U[i][j] = 1;
+                        } else {
+                            U[i][j] = matrix[i][j] / L[i][i];
+                            for (int k = 0; k < i; k++) {
+                                U[i][j] -= ((L[i][k] * U[k][j]) / L[i][i]);
+                            }
+                        }
+                    }
+                }
+
+                System.out.println("Lower Triangular Matrix L:");
+                Matrices.printMatrix(L);
+                System.out.println("Upper Triangular Matrix U:");
+                Matrices.printMatrix(U);
+            }
+            else {
+                System.out.println("Matrix must be square for LU Factorisation.");
+            }
+        }
+            else {
+                System.out.println("One matrix is required for LU Factorisation.");
+            }
+        }
 }
+
