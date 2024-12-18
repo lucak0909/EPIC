@@ -1,5 +1,8 @@
 package org.epiccalculator;
 
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
 import java.util.Random;
 
 public class Algebra extends Main {
@@ -133,7 +136,7 @@ public class Algebra extends Main {
     }
 
     public static int[] inputPolynomial() {
-        System.out.print("Enter the degree of the polynomial: ");
+        System.out.print("\nEnter the degree of the polynomial: ");
         int degree = input.nextInt();
         while (!Validate.isNumeric(String.valueOf(degree))) {
             System.out.println("\nInvalid input. Please enter a numeric value for the degree.");
@@ -151,21 +154,34 @@ public class Algebra extends Main {
         return coefficients;
     }
 
+    public static void plotGraph(int[] coefficients) {
+        double[] xData = new double[1000]; // large range for ease of use
+        double[] yData = new double[1000];
+        for (int i = 0; i < xData.length; i++) {
+            xData[i] = i - 500; // Example x values from -500 to 499
+            yData[i] = evaluatePolynomial(coefficients, xData[i]);
+        }
+
+        XYChart chart = QuickChart.getChart("Function Plot", "X", "Y", "f(x)", xData, yData);
+        new SwingWrapper<>(chart).displayChart();
+    }
+
     public static void main(String[] args) {
 
-        System.out.println("The algebra calculator can be used to:" +
+        System.out.println("\nThe algebra calculator can be used to:" +
                 "\n - Evaluate any polynomial at a given x" +
                 "\n - Find the shape of a Quadratic polynomial curve" +
                 "\n - Find the Critical Point of a polynomial within the domain of +- 1000" +
                 "\n - Find the first (or nth) derivative of a polynomial" +
-                "\n - Estimate the root(s) of a polynomial");
+                "\n - Estimate the root(s) of a polynomial" +
+                "\n - Polt the graph of a polynomial");
         System.out.println("Would you like to continue with the algebraic calculator? (Y/N)");
         System.out.print(">>> ");
 
         String Continue = input.next();
 
         while (!Continue.equalsIgnoreCase("Y") && !Continue.equalsIgnoreCase("N")) {
-            System.out.println("This is not a valid response. Please enter 'Y' or 'N'.");
+            System.out.println("\nThis is not a valid response. Please enter 'Y' or 'N'.");
             System.out.println(">>> ");
             Continue = input.next();
         }
@@ -173,13 +189,14 @@ public class Algebra extends Main {
         if (Continue.equalsIgnoreCase("Y")) {
 
             while (true) {
-                System.out.println("Choose an option:");
+                System.out.println("\nChoose an option:");
                 System.out.println("1. Evaluate a Polynomial");
                 System.out.println("2. Find the Shape of a Quadratic Polynomial Curve");
                 System.out.println("3. Find the First (or nth) Derivative of a Polynomial");
                 System.out.println("4. Find Maxima/Minima of a Quadratic Polynomial");
                 System.out.println("5. Estimate the Root(s) of a Polynomial");
-                System.out.println("6. Exit");
+                System.out.println("6. Plot The graph of a Polynomial");
+                System.out.println("7. Exit");
                 System.out.print(">>> ");
 
                 int mode = input.nextInt();
@@ -187,7 +204,7 @@ public class Algebra extends Main {
                 switch (mode) {
                     case 1:
                         int[] coefficients1 = inputPolynomial();
-                        System.out.print("Enter a value for x: ");
+                        System.out.print("\nEnter a value for x: ");
                         double x = input.nextDouble();
                         double result = evaluatePolynomial(coefficients1, x);
                         System.out.println("Result: " + result);
@@ -195,7 +212,7 @@ public class Algebra extends Main {
 
                     case 2:
                         int[] coefficients2 = new int[3];
-                        System.out.println("Enter the coefficients starting from the constant term:");
+                        System.out.println("\nEnter the coefficients starting from the constant term:");
                         for (int i = 0; i <= 2; i++) {
                             System.out.print("Coefficient of x^" + i + ": ");
                             coefficients2[i] = input.nextInt();
@@ -205,7 +222,7 @@ public class Algebra extends Main {
 
                     case 3:
                         int[] coefficients3 = inputPolynomial();
-                        System.out.println("To what degree do you want to find the derivative: ");
+                        System.out.println("\nTo what degree do you want to find the derivative: ");
                         int degree = input.nextInt();
                         int[] derivative = findNthDerivative(coefficients3, degree);
                         System.out.print("Derivative (polynomial form): ");
@@ -219,7 +236,7 @@ public class Algebra extends Main {
 
                     case 4:
                         int[] coefficients4 = new int[3];
-                        System.out.println("Enter the coefficients starting from the constant term:");
+                        System.out.println("\nEnter the coefficients starting from the constant term:");
                         for (int i = 0; i <= 2; i++) {
                             System.out.print("Coefficient of x^" + i + ": ");
                             coefficients4[i] = input.nextInt();
@@ -242,6 +259,11 @@ public class Algebra extends Main {
                         break;
 
                     case 6:
+                        int[] coefficients6 = inputPolynomial();
+                        plotGraph(coefficients6);
+                        break;
+
+                    case 7:
                         java.lang.System.exit(0);
                 }
             }

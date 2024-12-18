@@ -10,6 +10,7 @@ module org.epiccalculator {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires org.knowm.xchart;
 
     opens org.epiccalculator to javafx.fxml;
     exports org.epiccalculator;
