@@ -4,10 +4,6 @@ public class Trigonometry extends Main {
 
     public static class TriangleSolver {
 
-        public static void main(String[] args) {
-
-        }
-
         public static void triangleSolve() {
 
             System.out.println("Choose the type of triangle data you have:");
