@@ -38,10 +38,10 @@ public class Main {
                 Statistics.calculateStatistics();
                 break;
             case 7:
-                Probability.CalculateProbability();
+                Probability.calculateProbability();
                 break;
             case 8:
-                NumberSystems.CalculateNumberSystem();
+                NumberSystems.calculateNumberSystem();
                 break;
             case 9:
                 Matrices.CalculateMatrix();

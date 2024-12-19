@@ -14,7 +14,7 @@ public class NumberSystems extends Main {
         System.out.print(">>>");
     }
 
-    public static void CalculateNumberSystem() {
+    public static void calculateNumberSystem() {
         // Display options
         options();
 

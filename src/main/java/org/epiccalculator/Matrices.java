@@ -21,11 +21,13 @@ public class Matrices extends Main {
         ArrayList<int[][]> matrices = new ArrayList<>();
 
         for (int i = 0; i < number; i++) {
+            // get dimensions for matrix
             System.out.printf("Number of rows for matrix %d: ", i + 1);
             int rows = input.nextInt();
             System.out.printf("Number of columns for matrix %d: ", i + 1);
             int cols = input.nextInt();
 
+            // create new 2d array looping through number of rows and columns user entered
             int[][] matrix = new int[rows][cols];
             System.out.printf("Enter the elements of matrix %d: \n", i + 1);
             for (int r = 0; r < rows; r++) {
@@ -38,13 +40,14 @@ public class Matrices extends Main {
 
         System.out.printf("%d matrices created.\n", number);
         System.out.println("The matrices are: ");
+        // for each loop to display matrices in neat format
         for (int[][] matrix : matrices) {
             printMatrix(matrix);
         }
-
         return matrices;
     }
 
+    // Ascii art for matrices
     protected static void printMatrix(int[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
@@ -111,8 +114,8 @@ public class Matrices extends Main {
             throw new IllegalArgumentException("Two matrices are required.");
         }
 
-        int rows1 = matrices.get(0).length;
-        int cols1 = matrices.get(0)[0].length;
+        int rows1 = matrices.getFirst().length; //rows in m1
+        int cols1 = matrices.getFirst()[0].length; //columns in m1
         int rows2 = matrices.get(1).length;
         int cols2 = matrices.get(1)[0].length;
 
@@ -124,14 +127,17 @@ public class Matrices extends Main {
             throw new IllegalArgumentException("Two matrices are required.");
         }
 
-        int cols1 = matrices.get(0)[0].length;
+        int cols1 = matrices.getFirst()[0].length;
         int rows2 = matrices.get(1).length;
 
         return cols1 == rows2;
     }
 
-    protected static boolean isSquare(int[][] matrix) {
-        return matrix.length == matrix[0].length;
+    protected static boolean isSquare(ArrayList<int[][]> matrices) {
+        int cols = matrices.getFirst()[0].length;
+        int rows = matrices.getFirst().length;
+
+        return cols == rows;
     }
 
     public static void CalculateMatrix() {
@@ -183,9 +189,9 @@ class MatricesAddition implements MatrixCalculation {
             int cols = matrix1[0].length;
 
             int[][] result = new int[rows][cols];
-            for (int r = 0; r < rows; r++) {
-                for (int c = 0; c < cols; c++) {
-                    result[r][c] = matrix1[r][c] + matrix2[r][c];
+            for (int r = 0; r < rows; r++) { //iterate over each row
+                for (int c = 0; c < cols; c++) { //iterate over each column
+                    result[r][c] = matrix1[r][c] + matrix2[r][c]; //store result
                 }
             }
 
@@ -228,7 +234,7 @@ class MatricesMultiplication implements MatrixCalculation {
     public void calculate() {
         ArrayList<int[][]> matrices = Matrices.createMatrices(2);
         if (Matrices.m1ColumnsEqualM2Rows(matrices)) {
-            int[][] matrix1 = matrices.get(0);
+            int[][] matrix1 = matrices.getFirst();
             int[][] matrix2 = matrices.get(1);
 
             int rows1 = matrix1.length;
@@ -238,7 +244,7 @@ class MatricesMultiplication implements MatrixCalculation {
             int[][] result = new int[rows1][cols2];
             for (int r = 0; r < rows1; r++) {
                 for (int c = 0; c < cols2; c++) {
-                    for (int i = 0; i < cols1; i++) {
+                    for (int i = 0; i < cols1; i++) { //for each element of row in m1 and column in m2, multiply and add to result
                         result[r][c] += matrix1[r][i] * matrix2[i][c];
                     }
                 }
@@ -258,51 +264,46 @@ class MatricesMultiplication implements MatrixCalculation {
 class LUFactorisation implements MatrixCalculation {
     @Override
     public void calculate() {
-
         ArrayList<int[][]> matrices = Matrices.createMatrices(1);
-        if (matrices.size() == 1) {
-            int[][] matrix = matrices.getFirst();
-            if (Matrices.isSquare(matrix)) {
-                int n = matrix.length;
-                int[][] L = new int[n][n];
-                int[][] U = new int[n][n];
+        int[][] matrix = matrices.getFirst();
+        if (Matrices.isSquare(matrices)) {
+            int n = matrix.length; // get matrix length n
+            int[][] L = new int[n][n]; // initalise new matrices L and U with same number of r and c as original
+            int[][] U = new int[n][n];
 
-                for (int i = 0; i < n; i++) {
-                    // Upper Triangular
-                    for (int k = i; k < n; k++) {
-                        int sum = 0;
-                        for (int j = 0; j < i; j++) {
-                            sum += (L[i][j] * U[j][k]);
-                        }
-                        U[i][k] = matrix[i][k] - sum;
+            for (int r = 0; r < n; r++) {
+                // Upper
+                for (int c = r; c < n; c++) { // for each row, iterate from the diagonal to the end
+                    int sum = 0;
+                    for (int i = 0; i < r; i++) {
+                        sum += (L[r][i] * U[i][c]); //calculate the product of previous elements
                     }
-
-                    // Lower Triangular
-                    for (int k = i; k < n; k++) {
-                        if (i == k) {
-                            L[i][i] = 1; // Diagonal as 1
-                        } else {
-                            int sum = 0;
-                            for (int j = 0; j < i; j++) {
-                                sum += (L[k][j] * U[j][i]);
-                            }
-                            L[k][i] = (matrix[k][i] - sum) / U[i][i];
-                        }
-                    }
+                    U[r][c] = matrix[r][c] - sum; // subtract sum of iterated elements from original matrix
                 }
 
-                // Display Lower and Upper Triangular Matrices
-                System.out.println("Lower Triangular Matrix L:");
-                Matrices.printMatrix(L);
-
-                System.out.println("Upper Triangular Matrix U:");
-                Matrices.printMatrix(U);
-
-            } else {
-                System.out.println("Matrix must be square for LU Factorisation.");
+                // Lower
+                for (int c = r; c < n; c++) {
+                    if (c == r) {
+                        L[c][c] = 1; // Set diagonal elements of L to 1
+                    } else {
+                        int sum = 0;
+                        for (int i = 0; i < c; i++) {
+                            sum += (L[c][i] * U[c][i]); // for non diagonal elements, calculate product
+                        }
+                        L[c][r] = (matrix[c][r] - sum) / U[c][r]; // subtract sum of iterated elements from original matrix and divide by Upper Matrix
+                    }
+                }
             }
+
+            // Display Lower and Upper Triangular Matrices
+            System.out.println("Lower Triangular Matrix L:");
+            Matrices.printMatrix(L);
+
+            System.out.println("Upper Triangular Matrix U:");
+            Matrices.printMatrix(U);
+
         } else {
-            System.out.println("One matrix is required for LU Factorisation.");
+            System.out.println("Matrix must be square for LU Factorisation.");
         }
     }
 }
@@ -311,49 +312,44 @@ class PowerMatrix implements MatrixCalculation {
     @Override
     public void calculate() {
         ArrayList<int[][]> matrices = Matrices.createMatrices(1);
-        if (matrices.size() == 1) {
-            int[][] matrix = matrices.getFirst();
-            if (Matrices.isSquare(matrix)) {
-                System.out.println("Enter the power you want to raise the matrix to: ");
-                int power = input.nextInt();
+        int[][] matrix = matrices.getFirst();
+        if (Matrices.isSquare(matrices)) {
+            System.out.println("Enter the power you want to raise the matrix to: ");
+            int power = input.nextInt();
 
-                int n = matrix.length;
-                int[][] result = new int[n][n];
-                for (int i = 0; i < n; i++) {
-                    result[i][i] = 1;
-                }
+            int n = matrix.length;
+            int[][] result = new int[n][n]; // create result matrix same size as original
+            for (int i = 0; i < n; i++) {
+                result[i][i] = 1; // set result matrix diagonal elements to 1 (identity)
+            }
 
-                for (int i = 0; i < power; i++) {
-                    int[][] temp = new int[n][n];
-                    for (int r = 0; r < n; r++) {
-                        for (int c = 0; c < n; c++) {
-                            for (int k = 0; k < n; k++) {
-                                temp[r][c] += result[r][k] * matrix[k][c];
-                            }
+            for (int k = 0; k < power; k++) {
+                int[][] temp = new int[n][n];
+                for (int r = 0; r < n; r++) {
+                    for (int c = 0; c < n; c++) {
+                        for (int i = 0; i < n; i++) {
+                            temp[r][c] += result[r][i] * matrix[i][c]; // mulitply result matrix by original matrix, store in temp, iterate again
                         }
                     }
-                    result = temp;
                 }
+                result = temp;
+            }
 
-                System.out.printf("Matrix raised to the power of %d: \n", power);
-                Matrices.printMatrix(result);
-            }
-            else {
-                System.out.println("Matrix must be square for power calculation.");
-            }
-        }
-        else {
-            System.out.println("One matrix is required for power calculation.");
+            System.out.printf("Matrix raised to the power of %d: \n", power);
+            Matrices.printMatrix(result);
+        } else {
+            System.out.println("Matrix must be square for power calculation.");
         }
     }
 }
+
 class Eigenvalues implements MatrixCalculation {
     @Override
     public void calculate() {
         ArrayList<int[][]> matrices = Matrices.createMatrices(1);
         if (matrices.size() == 1) {
             int[][] matrix = matrices.get(0);
-            if (Matrices.isSquare(matrix)) {
+            if (Matrices.isSquare(matrices)) {
                 if (matrix.length == 2) {
                     double lambda1 = (((matrix[0][0] + matrix [1][1])+(Math.sqrt(Math.pow((matrix[0][0] + matrix [1][1]), 2) - 4*(matrix[0][0]*matrix[1][1] - matrix[0][1] * matrix[1][0]))))/2);
                     double lambda2 = (((matrix[0][0] + matrix [1][1])-(Math.sqrt(Math.pow((matrix[0][0] + matrix [1][1]), 2) - 4*(matrix[0][0]*matrix[1][1] - matrix[0][1] * matrix[1][0]))))/2);
