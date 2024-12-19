@@ -11,7 +11,6 @@ public class Statistics {
             Statistics.calculateStatistics();
         } catch (Exception e) {
             System.out.println("An unexpected error occured: "+ e.getMessage());
-            e.printStackTrace();
         }
     }
 

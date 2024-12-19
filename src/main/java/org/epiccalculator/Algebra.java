@@ -7,36 +7,41 @@ import java.util.Random;
 
 public class Algebra extends Main {
 
+    // Differentiates the polynomial represented by the given coefficients
     public static int[] differentiate(int[] coefficients) {
         int n = coefficients.length;
         if (n <= 1) {
-            return new int[]{0};
+            return new int[]{0}; // No derivative for constant or empty polynomial
         }
 
-        int[] derivative = new int[n - 1];
+        int[] derivative = new int[n - 1]; // Initialize array for the derivative
         for (int i = 1; i < n; i++) {
-            derivative[i - 1] = coefficients[i] * i;
+            derivative[i - 1] = coefficients[i] * i; // Apply the power rule
         }
         return derivative;
     }
 
+    // Computes the nth derivative of the polynomial
     public static int[] findNthDerivative(int[] coefficients, int degree) {
         for (int i = 0; i < degree; i++) {
-            coefficients = differentiate(coefficients);
+            coefficients = differentiate(coefficients); // Repeated differentiation
         }
         return coefficients;
     }
 
+    // Evaluates the polynomial at a given value of x
     public static double evaluatePolynomial(int[] coefficients, double x) {
         double result = 0;
         for (int i = 0; i < coefficients.length; i++) {
-            result += coefficients[i] * Math.pow(x, i);
+            result += coefficients[i] * Math.pow(x, i); // Polynomial evaluation
         }
         return result;
     }
 
+    // Finds the critical point of a polynomial within the specified domain
     public static double findCriticalPoint(int[] coefficients, double start, double end, double step) throws Exception {
         double criticalPoint = 0;
+        // Determines the shape of the curve to set criticalPoint
         if (determineShape(coefficients, generateRandomSamples(100, -1000, 1000)).equals("U")) {
             criticalPoint = Double.POSITIVE_INFINITY;
         } else if (determineShape(coefficients, generateRandomSamples(100, -1000, 1000)).equals("N")) {
@@ -45,12 +50,14 @@ public class Algebra extends Main {
             throw new Exception("Could not determine shape of function.");
         }
 
+        // Scan through the domain to find the minimum critical point
         for (double x = start; x <= end; x += step) {
             double value = evaluatePolynomial(coefficients, x);
             if (value < criticalPoint) {
                 criticalPoint = value;
             }
         }
+        // If critical point is too close to 0, consider it as 0 because this method estimates the point
         if (criticalPoint < 0.25 && criticalPoint > -0.25) {
             criticalPoint = 0;
         }
@@ -58,9 +65,10 @@ public class Algebra extends Main {
         return criticalPoint;
     }
 
+    // Determines whether the critical point is a maximum, minimum, or saddle point
     public static String findCriticalType(int[] coefficients, double x) {
         String type;
-        coefficients = findNthDerivative(coefficients, 2);
+        coefficients = findNthDerivative(coefficients, 2);  // Second derivative test
 
         if (evaluatePolynomial(coefficients, x) > 0) {
             type = "Minimum";
@@ -73,45 +81,49 @@ public class Algebra extends Main {
         return type;
     }
 
-    // used for finding shape of curve
+    // Generates random sample points for determining the shape of the curve
     public static double[] generateRandomSamples(int numSamples, double rangeMin, double rangeMax) {
         Random random = new Random();
         double[] samples = new double[numSamples];
         for (int i = 0; i < numSamples; i++) {
-            samples[i] = rangeMin + (rangeMax - rangeMin) * random.nextDouble();
+            samples[i] = rangeMin + (rangeMax - rangeMin) * random.nextDouble(); // Generate random samples
         }
         return samples;
     }
 
+    // Determines the shape of the polynomial's curve (U-shaped or N-shaped)
     public static String determineShape(int[] coefficients, double[] samplePoints) {
         int positiveCount = 0;
         int negativeCount = 0;
 
+        // Evaluate second derivative at sample points
         for (double x : samplePoints) {
             double secondDerivative = evaluatePolynomial(findNthDerivative(coefficients, 2), x);
             if (secondDerivative > 0) {
-                positiveCount++;
+                positiveCount++; // Concave up
             } else if (secondDerivative < 0) {
-                negativeCount++;
+                negativeCount++; // Concave down
             }
         }
 
-        // Analyze the counts
+        // Analyze the counts to determine the curve's shape
         if (positiveCount > negativeCount) {
-            return "U";
+            return "U"; // U-shaped curve (minimum)
         } else if (negativeCount > positiveCount) {
-            return "N";
+            return "N"; // N-shaped curve (maximum)
         } else {
-            return "Inconclusive";
+            return "Inconclusive"; // Cannot determine shape
         }
     }
 
+    // Applies Newton's Method to find the root of the polynomial
     public static double NewtonsMethod(int[] coefficients, double initialGuess) {
         double x = initialGuess;
-        double tolerance = 0.05;
+        double tolerance = 0.05; // Tolerance for convergence (quite high to minimise user error)
         int maxIterations = 1000;
         int iterations = 0;
 
+        // Iterate using Newton's Method to estimate the root
         while (iterations < maxIterations) {
             double fx = evaluatePolynomial(coefficients, x); // f(x)
             int[] derivative = differentiate(coefficients); // f'(x)
@@ -121,8 +133,9 @@ public class Algebra extends Main {
                 throw new ArithmeticException("Derivative is too small; Newton's Method may fail.");
             }
 
-            double xNew = x - fx / fPrimeX;
+            double xNew = x - fx / fPrimeX; // Update the estimate of the root
 
+            // If the change in x is small enough, return the root
             if (Math.abs(xNew - x) < tolerance) { // to allow a small error margin
                 return xNew;
             }
@@ -135,6 +148,7 @@ public class Algebra extends Main {
                 "Try a different initial guess.");
     }
 
+    // Prompts the user to input the coefficients of a polynomial
     public static int[] inputPolynomial() {
         System.out.print("\nEnter the degree of the polynomial: ");
         int degree = input.nextInt();
@@ -145,6 +159,7 @@ public class Algebra extends Main {
         }
         int[] coefficients = new int[degree + 1];
 
+        // Prompts the user to input the coefficients of a polynomial
         System.out.println("Enter the coefficients starting from the constant term:");
         for (int i = 0; i <= degree; i++) {
             System.out.print("Coefficient of x^" + i + ": ");
@@ -154,38 +169,44 @@ public class Algebra extends Main {
         return coefficients;
     }
 
+    // Plots the graph of the polynomial
     public static void plotGraph(int[] coefficients) {
-        double[] xData = new double[1000]; // large range for ease of use
+        double[] xData = new double[1000]; // large range to work for polys with a large constant term
         double[] yData = new double[1000];
         for (int i = 0; i < xData.length; i++) {
             xData[i] = i - 500; // Example x values from -500 to 499
             yData[i] = evaluatePolynomial(coefficients, xData[i]);
         }
 
+        // Create a chart and display it
         XYChart chart = QuickChart.getChart("Function Plot", "X", "Y", "f(x)", xData, yData);
         new SwingWrapper<>(chart).displayChart();
     }
 
+    // Main method for user interaction with the algebraic calculator
     public static void main(String[] args) {
 
+        // Display available operations in the calculator
         System.out.println("\nThe algebra calculator can be used to:" +
                 "\n - Evaluate any polynomial at a given x" +
                 "\n - Find the shape of a Quadratic polynomial curve" +
                 "\n - Find the Critical Point of a polynomial within the domain of +- 1000" +
                 "\n - Find the first (or nth) derivative of a polynomial" +
                 "\n - Estimate the root(s) of a polynomial" +
-                "\n - Polt the graph of a polynomial");
+                "\n - Plot the graph of a polynomial");
         System.out.println("Would you like to continue with the algebraic calculator? (Y/N)");
         System.out.print(">>> ");
 
         String Continue = input.next();
 
+        // Loop until a valid response is given
         while (!Continue.equalsIgnoreCase("Y") && !Continue.equalsIgnoreCase("N")) {
             System.out.println("\nThis is not a valid response. Please enter 'Y' or 'N'.");
             System.out.println(">>> ");
             Continue = input.next();
         }
 
+        // If the user chooses to continue, display options and perform selected operations
         if (Continue.equalsIgnoreCase("Y")) {
 
             while (true) {
@@ -201,6 +222,7 @@ public class Algebra extends Main {
 
                 int mode = input.nextInt();
 
+                // Switch-case to execute the selected operation
                 switch (mode) {
                     case 1:
                         int[] coefficients1 = inputPolynomial();
@@ -264,12 +286,13 @@ public class Algebra extends Main {
                         break;
 
                     case 7:
-                        java.lang.System.exit(0);
+                        java.lang.System.exit(0); // Exit the program
                 }
             }
 
         } else if (Continue.equalsIgnoreCase("N")) {
-            SelectMode();
+            SelectMode(); // Exit to mode selection
+
         }
     }
 }
